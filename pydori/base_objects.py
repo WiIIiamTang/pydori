@@ -8,10 +8,10 @@ class BandoriObject:
     as an object
     '''
     
-    def __init__(self, data : dict, id_name = 'id', region = 'en'):
+    def __init__(self, data : dict, id_name = 'id', region = 'en/'):
         self.URL_PARTY = "https://bandori.party/api/"
         self.URL_GA = "https://api.bandori.ga/v1/" + region # english server default
-        self.URL_GA_RES = "https://res.bandori.ga/assets/"
+        self.URL_GA_RES = "https://res.bandori.ga"
 
         self.id = data[id_name]
         self.data = data
@@ -248,10 +248,11 @@ class Stamp(Asset):
     def __init__(self, data):  
         super().__init__(data)
         self.name = data["name"]
+        self.members = data["members"]
     
-    def get_stamp_member(self):
+    def get_stamp_members(self):
         b = BandoriLoader()
-        d = b._api_get(id=self.cameo, url=self.URL_PARTY+'members/')
+        d = b._api_get(id=self.members, url=self.URL_PARTY+'members/')
 
         return [Member(data) for data in d]
 
@@ -287,10 +288,12 @@ class Band(BandoriObject):
     '''
     Represents a bang dream band
     '''
-    def __init__(self, data : dict, id_name = 'bandId'):
-        super().__init__(data, id_name)
+    def __init__(self, data : dict, id_name = 'bandId', region = 'en/'):
+        super().__init__(data, id_name, region)
         self.name = data["bandName"]
         self.introduction = data["introductions"]
+
+        # IDs for bandori.party api
         self.members = [data["leader"]+5, data["member1"]+5, data["member2"]+5, data["member3"]+5, data["member4"]+5]
 
         # bands past Roselia have messed up members.
@@ -305,8 +308,8 @@ class Song(BandoriObject):
     '''
     Represents a playable song in bang dream
     '''
-    def __init__(self, data : dict, id_name = 'musicId'):
-        super().__init__(data, id_name)
+    def __init__(self, data : dict, id_name = 'musicId', region = 'en/'):
+        super().__init__(data, id_name, region)
         self.title = data["title"]
         self.bgm = self.URL_GA_RES + data["bgmFile"]
         self.thumb = self.URL_GA_RES + data["thumb"]
@@ -315,8 +318,6 @@ class Song(BandoriObject):
         self.band = data["bandId"]
         self.difficulty = data["difficulty"]
         self.how_to_get = data["howToGet"]
-        
-        self.arranger = data["arranger"]
         self.composer = data["composer"]
         self.lyricist = data["lyricist"]
 
@@ -324,13 +325,13 @@ class Gacha(BandoriObject):
     '''
     Represents a gacha in bang dream
     '''
-    def __init__(self, data : dict, id_name = 'gachaId'):
-        super().__init__(data, id_name)
+    def __init__(self, data : dict, id_name = 'gachaId', region = 'en/'):
+        super().__init__(data, id_name, region)
         self.name = data["gachaName"]
         self.start_date = data["publishedAt"]
         self.end_date = data["closedAt"]
         self.description = data["description"]
-        self.annotation = data["annotation"]
+        
         self.period = data["gachaPeriod"]
         self.type = data["gachaType"]
     

@@ -6,9 +6,10 @@ class BandoriLoader:
     and bandori database
     '''
     def __init__(self, region = 'en/'):
+        self.region = region
         self.URL_PARTY = "https://bandori.party/api/"
         self.URL_GA = "https://api.bandori.ga/v1/" + region # english server default
-        self.URL_GA_RES = "https://res.bandori.ga/assets/"
+        self.URL_GA_RES = "https://res.bandori.ga"
 
 
     def _retrieve_response(self, url) -> dict:

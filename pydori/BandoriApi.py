@@ -40,18 +40,19 @@ class BandoriApi(BandoriLoader):
                 # How to get by id? bandori.party doesn't provide event_id
                 # (but it's still possible to search by id).
 
-        d = self._api_get(id=[], url=self.URL_PARTY+'events/')
+        d = self._api_get(id=id, url=self.URL_PARTY+'events/')
 
         return [Event(event) for event in d]
 
     def get_current_event(self):
         '''
-        Returns the current ongoing event as a dict, as provided by bandori database.
-
-        ### This event data has a different format than from bandori.party, so
-        ### the dictionary will have different contents.
+        Returns the current ongoing event, as provided by bandori database.
         '''
-        return self._retrieve_response(self.URL_GA+'event/')
+        event = self._retrieve_response(self.URL_GA+'event/')
+        id = event["eventId"] + 3 # offset of 3 to get the bandori.party events
+
+        return self.get_events(id=[id])
+
     
     def get_costumes(self, id : list = []):
         '''
@@ -112,10 +113,11 @@ class BandoriApi(BandoriLoader):
     def get_bands(self):
         '''
         Get all bands as a list of Band objects.
+        This cannot search by id.
         '''
         d = self._api_get(id=[], url=self.URL_GA+'band/', party=False)
 
-        return [Band(data) for data in d]
+        return [Band(data, region=self.region) for data in d]
 
 
     def get_songs(self, id : list = []):
@@ -126,7 +128,10 @@ class BandoriApi(BandoriLoader):
         '''
         d = self._api_get(id=id, url=self.URL_GA+'music/', party=False)
 
-        return [Song(data) for data in d]
+        if not id:
+            d = d["data"]
+
+        return [Song(data, region=self.region) for data in d]
     
     def get_gachas(self, id : list = []):
         '''
@@ -136,4 +141,7 @@ class BandoriApi(BandoriLoader):
         '''
         d = self._api_get(id=id, url=self.URL_GA+'gacha/', party=False)
 
-        return [Gacha(data) for data in d]
+        if not id:
+            d = d["data"]
+
+        return [Gacha(data, region=self.region) for data in d]
