@@ -88,7 +88,7 @@ Returns a list of ```Gacha```objects based on the ids provided. If the list is e
 
 
 ## BandoriObject
-Bandori objects are classes that represent data retrieved from the api. They are used to have quick access to certain attributes, and provide helpful methods on the data. They can be sorted by id. They cannot be normally instantiated and are meant as outputs from BandoriApi. All BandoriObjects have the follow attributes:
+Bandori objects are classes that represent data retrieved from the api. They are used to have quick access to certain attributes, and provide helpful methods on the data. They can be sorted by id. They should not be normally instantiated and are meant as outputs from BandoriApi. All BandoriObjects have the follow attributes:
 
 **URL_PARTY** - A url to the bandori.party api
 
