@@ -1,5 +1,5 @@
-from base_objects import *
-from util.bandori_loader import BandoriLoader
+from .base_objects import *
+from .bandori_loader import BandoriLoader
 
 
 class BandoriApi(BandoriLoader):
@@ -137,7 +137,3 @@ class BandoriApi(BandoriLoader):
         d = self._api_get(id=id, url=self.URL_GA+'gacha/', party=False)
 
         return [Gacha(data) for data in d]
-
-
-if __name__ == "__main__":
-    b = BandoriApi()

@@ -1,0 +1,11 @@
+build/
+
+dist/
+
+pydori.egg-info/
+*.egg
+
+
+*/__pycache__/
+
+*/.vscode/

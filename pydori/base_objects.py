@@ -1,6 +1,6 @@
 import requests
 import datetime
-from util.bandori_loader import BandoriLoader
+from .bandori_loader import BandoriLoader
 
 class BandoriObject:
     '''
