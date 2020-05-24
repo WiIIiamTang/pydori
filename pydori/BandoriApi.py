@@ -137,3 +137,7 @@ class BandoriApi(BandoriLoader):
         d = self._api_get(id=id, url=self.URL_GA+'gacha/', party=False)
 
         return [Gacha(data) for data in d]
+
+
+if __name__ == "__main__":
+    b = BandoriApi()
