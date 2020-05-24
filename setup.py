@@ -6,7 +6,7 @@ with open('README.md') as f:
 setup(
   name = 'pydori',         
   packages = ['pydori'],   
-  version = '0.1',      
+  version = '0.1.1',      
   license='MIT',        
   description = 'A python package to interact with the bandori.party and bandori.ga public APIs',
   long_description=long_description,
@@ -14,7 +14,7 @@ setup(
   author = 'William Tang',                   
   author_email = 'williaamt0@gmail.com',      
   url = 'https://github.com/WiIIiamTang/pydori',  
-  download_url = 'https://github.com/WiIIiamTang/pydori/archive/v0.1.tar.gz',  
+  download_url = 'https://github.com/WiIIiamTang/pydori/archive/v0.1.1.tar.gz',  
   keywords = ['API', 'Bandori', 'Bang Dream'],   
   install_requires=['requests'],
   classifiers=[
