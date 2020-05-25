@@ -39,6 +39,7 @@ print(card.name)
 
 ## BandoriApi
  ```pydori.BandoriApi(region = 'en/')```
+ 
 A class that talks to the bandori APIs. All functions that should be used are in this class. It holds the following attributes:
 
 **URL_PARTY** - A url to the bandori.party api
@@ -88,7 +89,9 @@ Returns a list of ```Gacha```objects based on the ids provided. If the list is e
 
 
 ## BandoriObject
-Bandori objects are classes that represent data retrieved from the api. They are used to have quick access to certain attributes, and provide helpful methods on the data. They can be sorted by id. They should not be normally instantiated and are meant as outputs from BandoriApi. All BandoriObjects have the follow attributes:
+```pydori.base_objects.BandoriObject(data : dict, id_name = 'id', region = 'en/')```
+
+Bandori objects are classes that represent data retrieved from the api. They are used to have quick access to certain attributes, and provide helpful methods on the data. They can be sorted by id. **They should not be normally instantiated (unless for debugging) and are meant as outputs from BandoriApi.** All BandoriObjects have the follow attributes:
 
 **URL_PARTY** - A url to the bandori.party api
 
@@ -108,6 +111,17 @@ Bandori objects are classes that represent data retrieved from the api. They are
 - *Not all attributes available from the api are recorded when creating these objects. It's best to work with the **data** dict as it contains everything.*
 - *Some attributes may have a null value and not work with their intended functions. Check before using.*
 - *The bandori.party api is used for most methods, with the Songs, Bands, and Gachas making use of the bandori database api.*
+
+### Parameters
+- data([dict]) - A python dictionary containing the data for the class
+
+- id_name(Optional[str]) - The string to use when searching for the id in the dict.
+
+- region(Optional[str]) - Region used for the bandori database api. Other options include 'jp/', 'tw/' (not tested), 'kr/' (not tested)
+
+
+The following classes inherit from BandoriObject (with the exception of Event):
+
 ___
 ### ```Card(BandoriObject)```
 Represents a Bang Dream card with the following attributes:
@@ -354,6 +368,12 @@ This takes in a dict from the bandori database api(so it is by region). Represen
 Returns a datetime object for the start date of the Gacha.
 #### ```get_end_date()```
 See ```get_start_date()```
+
+
+## BandoriLoader
+```pydori.bandori_loader.BandoriLoader(region = 'en/')```
+
+BandoriApi inherits from this class. It is only meant for internal use, and its purpose is to make api calls to bandori.party and bandori.database and return the result as dictionaries or lists. It should not be normally instantiated, but is useful sometimes for debugging.
 
 
 # Credits
