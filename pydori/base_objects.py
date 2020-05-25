@@ -18,6 +18,9 @@ class BandoriObject:
     
     def __lt__(self, other):
         return self.id < other.id
+    
+    def __str__(self):
+        return str(self.data)
 
 class Card(BandoriObject):
     '''
