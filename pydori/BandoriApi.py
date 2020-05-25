@@ -40,9 +40,9 @@ class BandoriApi(BandoriLoader):
                 # How to get by id? bandori.party doesn't provide event_id
                 # (but it's still possible to search by id).
 
-        d = self._api_get(id=id, url=self.URL_PARTY+'events/')
+        events = self._api_get(id=id, url=self.URL_PARTY+'events/')
 
-        return [Event(event) for event in d]
+        return [Event(event) for event in events]
 
     def get_current_event(self):
         '''
