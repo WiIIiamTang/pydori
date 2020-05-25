@@ -35,6 +35,17 @@ card = result[0]
 print(card.name)
 ```
 
+Here we get the current event and display the start and end times:
+```python
+from pydori import BandoriApi as api
+
+b = api()
+current = b.get_current_event()[0]
+
+print(current.get_start_date())
+print(current.get_end_date())
+```
+
 # Documentation
 
 ## BandoriApi
@@ -42,14 +53,15 @@ print(card.name)
  
 A class that talks to the bandori APIs. All functions that should be used are in this class. It holds the following attributes:
 
-**URL_PARTY** - A url to the bandori.party api
+- **URL_PARTY** - A url to the bandori.party api
 
-**URL_GA** - a url to the bandori.ga api
+- **URL_GA** - a url to the bandori.ga api
 
-**URL_GA_RES** - a url to the bandori database resource api
+- **URL_GA_RES** - a url to the bandori database resource api
 
 ### Parameters
 - region(Optional[str]) - Region used for the bandori database api. Other options include 'jp/', 'tw/' (not tested), 'kr/' (not tested)
+
 ### Functions
 #### ```get_cards(id : list = [])```
 Returns a list of ```Card``` objects based on the ids provided. If the list is empty, all cards will be returned.
@@ -61,7 +73,7 @@ Returns a list of ```Member``` objects based on the ids provided. If the list is
 Returns a list of ```Event``` objects based on the ids provided. If the list is empty, all members will be returned. *Warning: bandori.party events currently do not have an id (but events are still searchable by id)*
 
 #### ```get_current_event()```
-Returns the current event as an ```Event``` object in a list (it makes an internal call to ```get_events```. The current event is provided by the bandori database api, but the event data itself is from bandori.party.
+Returns the current event as an ```Event``` object in a list (it makes an internal call to ```get_events```). The current event is provided by the bandori database api, but the event data itself is from bandori.party.
 
 #### ```get_costumes(id : list = [])```
 Returns a list of ```Costume``` objects based on the ids provided. If the list is empty, all costumes will be returned.
@@ -93,24 +105,29 @@ Returns a list of ```Gacha```objects based on the ids provided. If the list is e
 
 Bandori objects are classes that represent data retrieved from the api. They are used to have quick access to certain attributes, and provide helpful methods on the data. They can be sorted by id. **They should not be normally instantiated (unless for debugging) and are meant as outputs from BandoriApi.** All BandoriObjects have the follow attributes:
 
-**URL_PARTY** - A url to the bandori.party api
+- **URL_PARTY** - A url to the bandori.party api
 
-**URL_GA** - a url to the bandori.ga api
+- **URL_GA** - a url to the bandori.ga api
 
-**URL_GA_RES** - a url to the bandori database resource api
+- **URL_GA_RES** - a url to the bandori database resource api
 
 
-**id** - The object's id
+- **id** - The object's id
 
-**data** - The original dict of the object's information from the api.
+- **data** - The original dict of the object's information from the api.
 
-- *Event is supposed to be a BandoriObject, but the event id is not directly provided by bandori.party - see the Event class*
 
-- *Region select only works on certain methods - Song, Gacha, Band. See below*
+_Notes:_
 
-- *Not all attributes available from the api are recorded when creating these objects. It's best to work with the **data** dict as it contains everything.*
-- *Some attributes may have a null value and not work with their intended functions. Check before using.*
-- *The bandori.party api is used for most methods, with the Songs, Bands, and Gachas making use of the bandori database api.*
+*Event is supposed to be a BandoriObject, but the event id is not directly provided by bandori.party - see the Event class*
+
+*Region select only works on certain methods - Song, Gacha, Band. See below*
+
+*Not all attributes available from the api are recorded when creating these objects. It's best to work with the **data** dict as it contains everything.*
+
+*Some attributes may have a null value and not work with their intended functions. Check before using.*
+
+*The bandori.party api is used for most methods, with the Songs, Bands, and Gachas making use of the bandori database api.*
 
 ### Parameters
 - data([dict]) - A python dictionary containing the data for the class
@@ -126,21 +143,21 @@ ___
 ### ```Card(BandoriObject)```
 Represents a Bang Dream card with the following attributes:
 
-**member** - member id
+- **member** - member id
 
-**rarity** - card rarity
+- **rarity** - card rarity
 
-**attribute** - card attribute
+- **attribute** - card attribute
 
-**id** - The object's id
+- **id** - The object's id
 
-**name** - english name
+- **name** - english name
 
-**japanese_name**
+- **japanese_name**
 
-**skill_type**
+- **skill_type**
 
-**cameo** - a list of cameo member ids
+- **cameo** - a list of cameo member ids
 
 #### Functions
 #### ```get_card_member()```
@@ -151,53 +168,53 @@ ___
 ### ```Member(BandoriObject)```
 Represents a Bang Dream member with the following attributes:
 
-**name**
+- **name**
 
-**japanese_name**
+- **japanese_name**
 
-**band** - the band name that the member belongs to
+- **band** - the band name that the member belongs to
 
-**school**
+- **school**
 
-**year**
+- **year**
 
-**romaji_cv**
+- **romaji_cv**
 
-**cv**
+- **cv**
 
-**birthday**
+- **birthday**
 
-**food_likes**
+- **food_likes**
 
-**food_dislikes**
+- **food_dislikes**
 
-**astro** - astrological sign
+- **astro** - astrological sign
 
-**instrument**
+- **instrument**
 
-**description**
+- **description**
 
 ___
 ### ```Event```
 Represents a bang dream event. As the event data does not come with any event id, it cannot inherit from BandoriObject, but is practically identical except for the id attribute.
 
-**name**
+- **name**
 
-**japanese_name**
+- **japanese_name**
 
-**type**
+- **type**
 
-**[english | jp | tw | kr]_[start | end]_date** - start and end dates for the events, for different servers.
+- **[english | jp | tw | kr]_[start | end]_date** - start and end dates for the events, for different servers.
 
-**versions_available** - versions of the game where the event is available
+- **versions_available** - versions of the game where the event is available
 
-**main_card** - main card id
+- **main_card** - main card id
 
-**secondary_card** - secondary card id
+- **secondary_card** - secondary card id
 
-**boost_attribute**
+- **boost_attribute**
 
-**boost_members** - a list of member ids who are boosted during event
+- **boost_members** - a list of member ids who are boosted during event
 
 #### Functions
 #### ```get_start_date(region = 'en')```
@@ -214,13 +231,13 @@ ___
 ### ```Costume(BandoriObject)```
 Represents an in-game costume with the following attributes:
 
-**type**
+- **type**
 
-**card** - card id if applicable
+- **card** - card id if applicable
 
-**member** - member id
+- **member** - member id
 
-**name**
+- **name**
 
 #### Functions
 #### ```get_costume_member()```
@@ -232,35 +249,35 @@ Returns a ```Card``` object corresponding to the Costume's **card** attribute
 ### ```Item(BandoriObject)```
 Represents an in-game item with the following attributes:
 
-**name**
+- **name**
 
-**type**
+- **type**
 
-**description**
+- **description**
 
 
 ---
 ### ```AreaItem(BandoriObject)```
 Represents an in-game area item with the following attributes:
 
-**name**
+- **name**
 
-**area** - id for the area. Currently unusable.
+- **area** - id for the area. Currently unusable.
 
-**type**
+- **type**
 
-**instrument**
+- **instrument**
 
 
-**attribute**
+- **attribute**
 
-**stat**
+- **stat**
 
-**max_level**
+- **max_level**
 
-**values** - list of percentages that the item boosts at each level.
+- **values** - list of percentages that the item boosts at each level.
 
-**description**
+- **description**
 
 ___
 ### ```Asset(BandoriObject)```
@@ -268,9 +285,9 @@ Represents a Bang Dream asset as defined by bandori.party. Every asset has a **t
 ### ```Comic(Asset)```
 A bandori comic.
 
-**name**
+- **name**
 
-**members** - a list of member ids (that appear in the comic)
+- **members** - a list of member ids (that appear in the comic)
 
   #### Functions
 #### ```get_comic_members()```
@@ -279,14 +296,14 @@ Returns a list of ```Member``` object corresponding to the Comic's **members** a
 ### ```Background(Asset)```
 A bandori background.
 
-**name**
+- **name**
 
 ### ```Stamp(Asset)```
 A bandori stamp.
 
-**name**
+- **name**
 
-**members** - a list of member ids that appear in the stamp.
+- **members** - a list of member ids that appear in the stamp.
 
   #### Functions
 #### ```get_stamp_members()```
@@ -295,9 +312,9 @@ Returns a list of ```Member``` object corresponding to the Comic's **members** a
 ### ```Title(Asset)```
 A bandori profile title.
 
-**event** - the event id this title is from.
+- **event** - the event id this title is from.
 
-**value** - TOP {value} of the event.
+- **value** - TOP {value} of the event.
 
   #### Functions
 #### ```title_event()```
@@ -306,7 +323,7 @@ Returns an ```Event``` object corresponding to the Title's **event** attribute.
 ### ```Interface(Asset)```
 A bandori interface (mostly pictures).
 
-**name**
+- **name**
 
 ### ```OfficialArt(Asset)```
 Bandori official art.
@@ -315,11 +332,11 @@ ___
 ### ```Band(BandoriObject)```
 This takes in a dict from the bandori database api (so it is by region). Represents a Bang Dream band with the following attributes:
 
-**name**
+- **name**
 
-**introduction**
+- **introduction**
 
-**members** - The bandori.party member ids for the members in this band. Note that any bands past Roselia have wrong ids for some reason.
+- **members** - The bandori.party member ids for the members in this band. Note that any bands past Roselia have wrong ids for some reason.
 
   #### Functions
 #### ```get_band_members()```
@@ -329,39 +346,39 @@ ___
 ### ```Song(BandoriObject)```
 This takes in a dict from the bandori database api (so it is by region). Represents a Bang Dream in-game song with the following attributes:
 
-**title**
+- **title**
 
-**bgm** - link to song mp3.
+- **bgm** - link to song mp3.
 
-**thumb**
+- **thumb**
 
-**jacket**
+- **jacket**
 
-**band_name**
+- **band_name**
 
-**band** - the band id.
+- **band** - the band id.
 
-**difficulty** 
+- **difficulty** 
 
-**how_to_get**
+- **how_to_get**
 
-**composer**
+- **composer**
 
-**lyricist**
+- **lyricist**
 
 ---
 ### ```Gacha(BandoriObject)```
 This takes in a dict from the bandori database api(so it is by region). Represents a Bang Dream gacha with the following attributes:
 
-**name**
+- **name**
 
-**[start | end]_date** - a *timestamp* in milliseconds for the start/end dates of the event.
+- **[start | end]_date** - a *timestamp* in milliseconds for the start/end dates of the event.
 
-**description**
+- **description**
 
-**period**
+- **period**
 
-**type**
+- **type**
 
  #### Functions
 #### ```get_start_date()```
