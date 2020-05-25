@@ -145,3 +145,23 @@ class BandoriApi(BandoriLoader):
             d = d["data"]
 
         return [Gacha(data, region=self.region) for data in d]
+    
+    def get_all(self):
+        '''
+        Get all possible objects from the apis
+        '''
+        d = {'cards': [], 'members': [], 'events': [], 'costumes': [], 'items': [],
+                'areaitems': [], 'assets' : {}, 'bands' : [], 'songs' : [], 'gachas' : []}
+        
+        d['cards'].extend(self.get_cards())
+        d['members'].extend(self.get_members())
+        d['events'].extend(self.get_events())
+        d['costumes'].extend(self.get_costumes())
+        d['items'].extend(self.get_items())
+        d['areaitems'].extend(self.get_areaitems())
+        d['assets'].update(self.get_assets())
+        d['bands'].extend(self.get_bands())
+        d['songs'].extend(self.get_songs())
+        d['gachas'].extend(self.get_gachas())
+
+        return d
