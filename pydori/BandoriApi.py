@@ -36,11 +36,12 @@ class BandoriApi(BandoriLoader):
         Get events by ids, as Event objects.
         If the list is empty, will get all events.
         '''
-
-                # How to get by id? bandori.party doesn't provide event_id
-                # (but it's still possible to search by id).
-
-        events = self._api_get(id=id, url=self.URL_PARTY+'events/')
+        if not id:
+            events = self._full_event_loader(url=self.URL_PARTY+'events/')
+        else:
+            events = self._api_get(id=id, url=self.URL_PARTY+'events/')
+            for i, event in enumerate(events):
+                event['id'] = id[i]
 
         return [Event(event) for event in events]
 
@@ -51,7 +52,7 @@ class BandoriApi(BandoriLoader):
         event = self._retrieve_response(self.URL_GA+'event/')
         id = event["eventId"] + 3 # offset of 3 to get the bandori.party events
 
-        return self.get_events(id=[id])
+        return self.get_events(id=[id])[0]
 
     
     def get_costumes(self, id : list = []):

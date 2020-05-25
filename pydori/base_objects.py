@@ -69,20 +69,15 @@ class Member(BandoriObject):
         self.instrument = data["instrument"]
         self.description = data["description"]
         
-class Event:
+class Event(BandoriObject):
     '''
     Represents a bang dream game event.
     '''
-            # TODO: event id not available.
 
     def __init__(self, data : dict, region = 'en/'):
-        self.URL_PARTY = "https://bandori.party/api/"
-        self.URL_GA = "https://api.bandori.ga/v1/" + region
-        self.URL_GA_RES = "https://res.bandori.ga/assets/"
+        super().__init__(data)
 
-        self.name = data["name"]
-        self.data = data
-        
+        self.name = data["name"]        
         self.japanese_name = data["japanese_name"]
         self.type = data["i_type"]
 

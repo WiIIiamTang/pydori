@@ -68,3 +68,33 @@ class BandoriLoader:
                     res.append(self._retrieve_response(url + str(i)))
                 
                 return res
+    
+
+    def _full_event_loader(self, url) -> list:
+        '''
+        A function that returns a list of dicts.
+
+        Each dict is an event.
+
+        It grabs all events from bandori.party api,
+        and adds the appropriate id to the event.
+        '''
+        events = []
+        id = 1 # assuming the smallest event id is 1.
+
+        # getting the total count of events.
+        data = self._retrieve_response(url)
+        total_count = data["count"]
+
+        # adding all events to the list.
+        while len(events) < total_count:
+            data = self._retrieve_response(url + str(id))
+            if 'detail' in data.keys():
+                pass
+            else:
+                data['id'] = id
+                events.append(data)
+            id += 1
+            #print(id, end='\r')
+
+        return events

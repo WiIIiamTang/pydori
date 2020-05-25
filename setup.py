@@ -6,7 +6,7 @@ with open('README.md') as f:
 setup(
   name = 'pydori',         
   packages = find_packages(),   
-  version = '0.2.0',      
+  version = '0.3.0',      
   license='MIT',        
   description = 'A python package to interact with the bandori.party and bandori.ga public APIs',
   long_description=long_description,
