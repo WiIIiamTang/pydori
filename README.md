@@ -289,7 +289,7 @@ A bandori comic.
 
 - **members** - a list of member ids (that appear in the comic)
 
-  #### Functions
+#### Functions
 #### ```get_comic_members()```
 Returns a list of ```Member``` object corresponding to the Comic's **members** attribute
 
@@ -305,7 +305,7 @@ A bandori stamp.
 
 - **members** - a list of member ids that appear in the stamp.
 
-  #### Functions
+#### Functions
 #### ```get_stamp_members()```
 Returns a list of ```Member``` object corresponding to the Comic's **members** attribute
 
@@ -316,7 +316,7 @@ A bandori profile title.
 
 - **value** - TOP {value} of the event.
 
-  #### Functions
+#### Functions
 #### ```title_event()```
 Returns an ```Event``` object corresponding to the Title's **event** attribute.
 
@@ -338,7 +338,7 @@ This takes in a dict from the bandori database api (so it is by region). Represe
 
 - **members** - The bandori.party member ids for the members in this band. Note that any bands past Roselia have wrong ids for some reason.
 
-  #### Functions
+#### Functions
 #### ```get_band_members()```
 Returns a list of ```Member``` object corresponding to the Band's **members** attribute
 
@@ -380,7 +380,7 @@ This takes in a dict from the bandori database api(so it is by region). Represen
 
 - **type**
 
- #### Functions
+#### Functions
 #### ```get_start_date()```
 Returns a datetime object for the start date of the Gacha.
 #### ```get_end_date()```
