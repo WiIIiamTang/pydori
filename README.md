@@ -127,7 +127,7 @@ _Notes:_
 
 *Some attributes may have a null value and not work with their intended functions. Check before using.*
 
-*The bandori.party api is used for most methods, with the Songs, Bands, and Gachas making use of the bandori database api.*
+*The bandori.party api is used for most classes. The Songs, Bands, and Gachas class make use of the bandori database api.*
 
 ### Parameters
 - data([dict]) - A python dictionary containing the data for the class
