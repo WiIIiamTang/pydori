@@ -70,7 +70,7 @@ Returns a list of ```Card``` objects based on the ids provided. If the list is e
 Returns a list of ```Member``` objects based on the ids provided. If the list is empty, all members will be returned.
 
 #### ```get_events(id : list = [])```
-Returns a list of ```Event``` objects based on the ids provided. If the list is empty, all members will be returned. *Warning: bandori.party events currently do not have an id (but events are still searchable by id)*
+Returns a list of ```Event``` objects based on the ids provided. If the list is empty, all members will be returned.
 
 #### ```get_current_event()```
 Returns the current event as an ```Event``` object in a list (it makes an internal call to ```get_events```). The current event is provided by the bandori database api, but the event data itself is from bandori.party.
@@ -119,8 +119,6 @@ Bandori objects are classes that represent data retrieved from the api. They are
 
 _Notes:_
 
-*Event is supposed to be a BandoriObject, but the event id is not directly provided by bandori.party - see the Event class*
-
 *Region select only works on certain methods - Song, Gacha, Band. See below*
 
 *Not all attributes available from the api are recorded when creating these objects. It's best to work with the **data** dict as it contains everything.*
@@ -137,7 +135,7 @@ _Notes:_
 - region(Optional[str]) - Region used for the bandori database api. Other options include 'jp/', 'tw/' (not tested), 'kr/' (not tested)
 
 
-The following classes inherit from BandoriObject (with the exception of Event):
+The following classes inherit from BandoriObject:
 
 ___
 ### ```Card(BandoriObject)```
@@ -195,8 +193,8 @@ Represents a Bang Dream member with the following attributes:
 - **description**
 
 ___
-### ```Event```
-Represents a bang dream event. As the event data does not come with any event id, it cannot inherit from BandoriObject, but is practically identical except for the id attribute.
+### ```Event(BandoriObject)```
+Represents a bang dream event with the following attributes:
 
 - **name**
 
