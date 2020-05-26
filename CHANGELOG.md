@@ -1,6 +1,23 @@
 # Changelog
 All notable changes are documented in this file.
 
+## 0.3.1 - 2020-05-26
+### Fixed
+- Fixed an issue where getting all possible objects was not returning the full amount.
+
+
+## 0.3.0 - 2020-05-25
+### Added
+- get_all() function to get everything available from the api.
+- BandoriObjects now print out their **data** attribute when cast to a string.
+- Event objects now inherit from BandoriObject
+- new function in BandoriLoader that handles getting the id of each event.
+
+### Fixed
+- Documentation : typos, small changes to wording, changed description of Event class
+- get_current_event() returns an Event object and not a list anymore
+
+
 ## 0.2.0 - 2020-05-24
 ### Added
 - new : get_current_event() from BandoriApi class uses the bandori.party api instead.
