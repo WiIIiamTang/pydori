@@ -36,6 +36,7 @@ class BandoriLoader:
             data = response.json()
 
             if data["next"] is None:
+                res.extend(data["results"])
                 break
             else:
                 res.extend(data["results"])
