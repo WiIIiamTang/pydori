@@ -1,6 +1,7 @@
 # Contributing
 
 master: stable version
+
 dev: latest features and fixes
 
 1. Fork the repo
