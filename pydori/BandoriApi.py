@@ -13,33 +13,33 @@ class BandoriApi(BandoriLoader):
         super().__init__(region)
 
 
-    def get_cards(self, id : list = []):
+    def get_cards(self, id : list = [], filters={}):
         '''
         Get card by ids, as Card objects.
         If the list is empty, will get all cards.
         '''
-        d = self._api_get(id=id, url=self.URL_PARTY+'cards/')
+        d = self._api_get(id=id, url=self.URL_PARTY+'cards/', filters=filters)
         
         return [Card(data) for data in d]
 
-    def get_members(self, id : list = []):
+    def get_members(self, id : list = [], filters={}):
         '''
         Get member by ids, as Member objects.
         If the list is empty, will get all members.
         '''
-        d = self._api_get(id=id, url=self.URL_PARTY+'members/')
+        d = self._api_get(id=id, url=self.URL_PARTY+'members/', filters=filters)
         
         return [Member(data) for data in d]
 
-    def get_events(self, id : list = []):
+    def get_events(self, id : list = [], filters={}):
         '''
         Get events by ids, as Event objects.
         If the list is empty, will get all events.
         '''
         if not id:
-            events = self._full_event_loader(url=self.URL_PARTY+'events/')
+            events = self._full_event_loader(url=self.URL_PARTY+'events/', filters=filters)
         else:
-            events = self._api_get(id=id, url=self.URL_PARTY+'events/')
+            events = self._api_get(id=id, url=self.URL_PARTY+'events/', filters=filters)
             for i, event in enumerate(events):
                 event['id'] = id[i]
 
@@ -55,34 +55,34 @@ class BandoriApi(BandoriLoader):
         return self.get_events(id=[id])[0]
 
     
-    def get_costumes(self, id : list = []):
+    def get_costumes(self, id : list = [], filters={}):
         '''
         Get costume by ids, as Costume objects.
         If the list is empty all costumes will be returned.
         '''
-        d = self._api_get(id=id, url=self.URL_PARTY+'costumes/')
+        d = self._api_get(id=id, url=self.URL_PARTY+'costumes/', filters=filters)
 
         return [Costume(data) for data in d]
     
-    def get_items(self, id : list = []):
+    def get_items(self, id : list = [], filters={}):
         '''
         Get item by ids, as Item objects.
         If the list is empty all items will be returned.
         '''
-        d = self._api_get(id=id, url=self.URL_PARTY+'items/')
+        d = self._api_get(id=id, url=self.URL_PARTY+'items/', filters=filters)
 
         return [Item(data) for data in d]
     
-    def get_areaitems(self, id : list = []):
+    def get_areaitems(self, id : list = [], filters={}):
         '''
         Get areaitem by ids, as AreaItem objects.
         If the list is empty all items will be returned.
         '''
-        d = self._api_get(id=id, url=self.URL_PARTY+'areaitems/')
+        d = self._api_get(id=id, url=self.URL_PARTY+'areaitems/', filters=filters)
 
         return [AreaItem(data) for data in d]
     
-    def get_assets(self, id : list = []):
+    def get_assets(self, id : list = [], filters={}):
         '''
         Get asset by ids.
         If the list is empty all items will be returned.
@@ -90,7 +90,7 @@ class BandoriApi(BandoriLoader):
         The return value is a dict with keys to the categories of assets,
         and for values a list of Asset objects.
         '''
-        d = self._api_get(id=id, url=self.URL_PARTY+'assets/')
+        d = self._api_get(id=id, url=self.URL_PARTY+'assets/', filters=filters)
 
         sorted = {"comic" : [], "background" : [], "stamp": [], "title" : [], "interface" : [], "officialart" : []}
         for data in d:
@@ -111,36 +111,36 @@ class BandoriApi(BandoriLoader):
         return sorted
     
 
-    def get_bands(self):
+    def get_bands(self, filters={}):
         '''
         Get all bands as a list of Band objects.
         This cannot search by id.
         '''
-        d = self._api_get(id=[], url=self.URL_GA+'band/', party=False)
+        d = self._api_get(id=[], url=self.URL_GA+'band/', party=False, filters=filters)
 
         return [Band(data, region=self.region) for data in d]
 
 
-    def get_songs(self, id : list = []):
+    def get_songs(self, id : list = [], filters={}):
         '''
         Get song by ids, as Song objects.
 
         If the list is empty all songs will be returned.
         '''
-        d = self._api_get(id=id, url=self.URL_GA+'music/', party=False)
+        d = self._api_get(id=id, url=self.URL_GA+'music/', party=False, filters=filters)
 
         if not id:
             d = d["data"]
 
         return [Song(data, region=self.region) for data in d]
     
-    def get_gachas(self, id : list = []):
+    def get_gachas(self, id : list = [], filters={}):
         '''
         Get gacha by ids, as Gacha objects.
 
         If the list is empty all gacha will be returned.
         '''
-        d = self._api_get(id=id, url=self.URL_GA+'gacha/', party=False)
+        d = self._api_get(id=id, url=self.URL_GA+'gacha/', party=False, filters=filters)
 
         if not id:
             d = d["data"]

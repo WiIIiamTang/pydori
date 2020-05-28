@@ -1,6 +1,11 @@
 # Changelog
 All notable changes are documented in this file.
 
+## 0.4.0
+### Added
+- GET functions now can take a filters argument (as a dict). When the list of ids is empty, GET functions will filter with the parameters provided in the dictionary. Filter keys are based on the response json attributes. See documentation.
+- _check_filters() function in BandoriLoader class; see above.
+
 ## 0.3.1 - 2020-05-26
 ### Fixed
 - Fixed an issue where getting all possible objects was not returning the full amount.

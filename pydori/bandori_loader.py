@@ -20,7 +20,7 @@ class BandoriLoader:
         res = requests.get(url)
         return res.json()
 
-    def _retrieve_responses(self, url) -> list:
+    def _retrieve_responses(self, url, filters={}) -> list:
         '''
         ### FOR BANDORI.PARTY API CALLS
 
@@ -31,27 +31,42 @@ class BandoriLoader:
         '''
         res = []
         page = url
+        #print(filters)
+
         while(True):
             response = requests.get(page)
             data = response.json()
 
             if data["next"] is None:
-                res.extend(data["results"])
+                for d in data["results"]:
+                    if self._check_filters(filters=filters, obj=d):
+                        res.append(d)
                 break
             else:
-                res.extend(data["results"])
+                for d in data["results"]:
+                    if self._check_filters(filters=filters, obj=d):
+                        res.append(d)
                 page = data["next"]
         
         return res
     
-    def _api_get(self, id : list = [], url='', party=True) -> list:
+    def _check_filters(self, filters={}, obj=None):
+        if not filters:
+            return True
+        
+        for key, value in filters.items():
+            if obj[key] != value:
+                return False
+        return True
+    
+    def _api_get(self, id : list = [], url='', party=True, filters={}) -> list:
         '''
         Handles getting responses from the APIs.
         The result is always returned as a list.
         '''
         if party:
             if not id:
-                return self._retrieve_responses(url)
+                return self._retrieve_responses(url=url, filters=filters)
             
             else:
                 res = []
@@ -71,7 +86,7 @@ class BandoriLoader:
                 return res
     
 
-    def _full_event_loader(self, url) -> list:
+    def _full_event_loader(self, url, filters={}) -> list:
         '''
         A function that returns a list of dicts.
 
@@ -90,12 +105,13 @@ class BandoriLoader:
         # adding all events to the list.
         while len(events) < total_count:
             data = self._retrieve_response(url + str(id))
-            if 'detail' in data.keys():
-                pass
-            else:
-                data['id'] = id
-                events.append(data)
-            id += 1
-            #print(id, end='\r')
+            if self._check_filters(filters=filters, obj=data):
+                if 'detail' in data.keys():
+                    pass
+                else:
+                    data['id'] = id
+                    events.append(data)
+                id += 1
+                #print(id, end='\r')
 
         return events
