@@ -28,14 +28,39 @@ class Card(BandoriObject):
     '''
     def __init__(self, data : dict):
         super().__init__(data)
-        # not all attributes are listed.
-        self.member = data["member"]
-        self.rarity = data["i_rarity"]
-        self.attribute = data["i_attribute"]
-        self.name = data["name"]
-        self.japanese_name = data["japanese_name"]
-        self.skill_type = data["i_skill_type"]
-        self.cameo = data["cameo_members"]
+        
+        self.member = data.get("member")
+        self.rarity = data.get("i_rarity")
+        self.attribute = data.get("i_attribute")
+        self.name = data.get("name")
+        self.japanese_name = data.get("japanese_name")
+        self.is_promo = data.get("is_promo")
+        self.is_original = data.get("is_original")
+        self.image = data.get("image")
+        self.image_trained = data.get("image_trained")
+        self.art = data.get("art")
+        self.art_trained = data.get("art_trained")
+        self.transparent = data.get("transparent")
+        self.transparent_trained = data.get("transparent_trained")
+        self.skill_name = data.get("skill_name")
+        self.japanese_skill_name = data.get("japanese_skill_name")
+        self.skill_type = data.get("i_skill_type")
+        self.side_skill_type = data.get("i_side_skill_type")
+        self.skill_template = data.get("skill_template")
+        self.skill_variables = data.get("skill_variables")
+        self.side_skill_template = data.get("side_skill_template")
+        self.side_skill_variables = data.get("side_skill_variables")
+        self.full_skill = data.get("full_skill")
+        self.performance_min = data.get("performnce_min")
+        self.performance_max = data.get("performance_max")
+        self.performance_trained_max = data.get("performance_trained_max")
+        self.technique_min = data.get("technique_min")
+        self.technique_max = data.get("technique_max")
+        self.technique_trained_max = data.get("technique_trained_max")
+        self.visual_min = data.get("visual_min")
+        self.visual_max = data.get("visual_max")
+        self.visual_trained_max = data.get("visual_trained_max")
+        self.cameo = data.get("cameo_members")
     
     def get_card_member(self):
         b = BandoriLoader()
