@@ -7,12 +7,12 @@
 
   
 
-A python package to interact with the bandori.party and bandori.ga public APIs.
+A python wrapper for the bandori.party and bandori.ga public APIs.
 
   
 
 # Info
-Although both bandori.party and bandori database provide extensive public bang dream api's, there is currently not much documentation to help navigate through them. This package attempts to simplify accessing the various endpoints they provide. Not everything is available through this package, but I think the main ones are there.
+Although both bandori.party and bandori database provide extensive public bang dream api's, there is currently not much documentation to help navigate through them. This package attempts to simplify accessing the various endpoints they provide. Not everything is available through this package, but the main ones should be here. This package consolidates both the bandori.party and bandori.ga APIs - for example, songs are not available through the bandori.party API, so all music-related data is gotten from bandori database.
   
 
 # Installation
