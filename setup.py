@@ -8,7 +8,7 @@ setup(
   packages = find_packages(),   
   version = '0.4.0',      
   license='MIT',        
-  description = 'A python package to interact with the bandori.party and bandori.ga public APIs',
+  description = 'A python wrapper to interact with the bandori.party and bandori.ga public APIs',
   long_description=long_description,
   long_description_content_type='text/markdown',  
   author = 'William Tang',                         

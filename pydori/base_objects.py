@@ -13,7 +13,7 @@ class BandoriObject:
         self.URL_GA = "https://api.bandori.ga/v1/" + region # english server default
         self.URL_GA_RES = "https://res.bandori.ga"
 
-        self.id = data[id_name]
+        self.id = data.get(id_name)
         self.data = data
         self.bl = BandoriLoader()
     

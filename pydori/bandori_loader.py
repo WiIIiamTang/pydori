@@ -10,6 +10,9 @@ class BandoriLoader:
         self.URL_PARTY = "https://bandori.party/api/"
         self.URL_GA = "https://api.bandori.ga/v1/" + region # english server default
         self.URL_GA_RES = "https://res.bandori.ga"
+    
+    class FailedRequest(Exception):
+        pass
 
 
     def _retrieve_response(self, url) -> dict:
@@ -18,6 +21,9 @@ class BandoriLoader:
         as a dict.
         '''
         res = requests.get(url)
+        if res.status_code != 200:
+            raise FailedRequest(f'Could not get request from {url}')
+        
         return res.json()
 
     def _retrieve_responses(self, url, filters={}) -> list:
@@ -35,6 +41,8 @@ class BandoriLoader:
 
         while(True):
             response = requests.get(page)
+            if res.status_code != 200:
+                raise FailedRequest(f'Could not get request from {page}. Stopping operation.')
             data = response.json()
 
             if data["next"] is None:
