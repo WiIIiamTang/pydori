@@ -7,5 +7,8 @@ pydori.egg-info/
 
 
 */__pycache__/
+__pycache__/
 
-*/.vscode/
+.vscode/
+
+.pytest_cache/
