@@ -2,9 +2,18 @@
 All notable changes are documented in this file.
 
 ## 0.4.0
+This should be largely compatible with older versions. The filter is an optional argument.
+
 ### Added
 - GET functions now can take a filters argument (as a dict). When the list of ids is empty, GET functions will filter with the parameters provided in the dictionary. Filter keys are based on the response json attributes. See documentation.
 - _check_filters() function in BandoriLoader class; see above.
+- added attributes to base objects.
+- bandori objects initialize a bandoriLoader at start
+- updated documentation to reflect filters
+
+### Fixed
+- AreaItem class: attribute **stat** changed to **boost_stat**
+- AreaItem class: function **title_event()** changed to **get_title_event()**
 
 ## 0.3.1 - 2020-05-26
 ### Fixed

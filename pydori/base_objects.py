@@ -207,9 +207,9 @@ class Costume(BandoriObject):
     
     def get_costume_card(self):
         
-        data = self.bl._api_get(id=[self.card], url=self.URL_PARTY+'cards/')
+        d = self.bl._api_get(id=[self.card], url=self.URL_PARTY+'cards/')
 
-        return Card(data[0])
+        return Card(d[0])
 
 class Item(BandoriObject):
     '''
