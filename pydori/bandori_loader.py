@@ -50,7 +50,7 @@ class BandoriLoader:
         
         return res
     
-    def _check_filters(self, filters={}, obj=None):
+    def _check_filters(self, filters={}, obj : dict=None):
         '''
         Checks if the object (a dict) has the correct key-pair values
         corresponding to the filters.

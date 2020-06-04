@@ -15,6 +15,7 @@ class BandoriObject:
 
         self.id = data[id_name]
         self.data = data
+        self.bl = BandoriLoader()
     
     def __lt__(self, other):
         return self.id < other.id
@@ -63,14 +64,14 @@ class Card(BandoriObject):
         self.cameo = data.get("cameo_members")
     
     def get_card_member(self):
-        b = BandoriLoader()
-        data = b._api_get(id=[self.member], url=self.URL_PARTY+'members/')
+        
+        d = self.bl._api_get(id=[self.member], url=self.URL_PARTY+'members/')
 
-        return Member(data[0])
+        return Member(d[0])
     
     def get_cameo_members(self):
-        b = BandoriLoader()
-        d = b._api_get(id=self.cameo, url=self.URL_PARTY+'members/')
+        
+        d = self.bl._api_get(id=self.cameo, url=self.URL_PARTY+'members/')
 
         return [Member(data) for data in d]
 
@@ -80,19 +81,19 @@ class Member(BandoriObject):
     '''
     def __init__(self, data : dict):
         super().__init__(data)
-        self.name = data["name"]
-        self.japanese_name = data["japanese_name"]
-        self.band = data["i_band"]                    # TODO: match band to Band object
-        self.school = data["school"]
-        self.year = data["i_school_year"]
-        self.romaji_cv = data["romaji_CV"]
-        self.cv = data["CV"]
-        self.birthday = data["birthday"]
-        self.food_likes = data["food_like"]
-        self.food_dislikes = data["food_dislike"]
-        self.astro = data["i_astrological_sign"]
-        self.instrument = data["instrument"]
-        self.description = data["description"]
+        self.name = data.get("name")
+        self.japanese_name = data.get("japaense_name")
+        self.band = data.get("i_band")                    # TODO: match band to Band object
+        self.school = data.get("school")
+        self.year = data.get("i_school_year")
+        self.romaji_cv = data.get("romaji_CV")
+        self.cv = data.get("CV")
+        self.birthday = data.get("birthday")
+        self.food_likes = data.get("food_like")
+        self.food_dislikes = data.get("food_dislike")
+        self.astro = data.get("i_astrological_sign")
+        self.instrument = data.get("instrument")
+        self.description = data.get("description")
         
 class Event(BandoriObject):
     '''
@@ -102,23 +103,25 @@ class Event(BandoriObject):
     def __init__(self, data : dict, region = 'en/'):
         super().__init__(data)
 
-        self.name = data["name"]        
-        self.japanese_name = data["japanese_name"]
-        self.type = data["i_type"]
+        self.name = data.get("name")      
+        self.japanese_name = data.get("japanese_name")
+        self.type = data.get("i_type")
+        self.image = data.get("image")
 
-        self.english_start_date = data["english_start_date"]
-        self.english_end_date = data["english_end_date"]
-        self.jp_start_date = data["start_date"]
-        self.jp_end_date = data["end_date"]
-        self.tw_start_date = data["taiwanese_start_date"]
-        self.tw_end_date = data["taiwanese_end_date"]
-        self.kr_start_date = data["korean_start_date"]
-        self.kr_end_date = data["korean_end_date"]
+        self.english_start_date = data.get("english_start_date")
+        self.english_end_date = data.get("english_end_date")
+        self.jp_start_date = data.get("start_date")
+        self.jp_end_date = data.get("end_date")
+        self.tw_start_date = data.get("taiwanese_start_date")
+        self.tw_end_date = data.get("taiwanese_end_date")
+        self.kr_start_date = data.get("korean_start_date")
+        self.kr_end_date = data.get("korean_end_date")
 
-        self.versions_available = data["c_versions"]
-        self.main_card = data["main_card"]
-        self.secondary_card = data["secondary_card"]
-        self.boost_attribute = data["i_boost_attribute"]
+        self.versions_available = data.get("c_versions")
+        self.main_card = data.get("main_card")
+        self.secondary_card = data.get("secondary_card")
+        self.boost_attribute = data.get("i_boost_attribute")
+        self.boost_stat = data.get("i_boost_stat")
         self.boost_members = data["boost_members"]
 
     def get_start_date(self, region = 'en'):
@@ -166,20 +169,20 @@ class Event(BandoriObject):
                 return -1
     
     def get_main_card(self):
-        b = BandoriLoader()
-        data = b._api_get(id=[self.main_card], url=self.URL_PARTY+'card/')
+        
+        data = self.bl._api_get(id=[self.main_card], url=self.URL_PARTY+'card/')
 
         return Card(data[0])
     
     def get_secondary_card(self):
-        b = BandoriLoader()
-        data = b._api_get(id=[self.secondary_card], url=self.URL_PARTY+'card/')
+        
+        data = self.bl._api_get(id=[self.secondary_card], url=self.URL_PARTY+'card/')
 
         return Card(data[0])
 
     def get_boost_members(self):
-        b = BandoriLoader()
-        d = b._api_get(id=self.boost_attribute, url=self.URL_PARTY+'members/')
+        
+        d = self.bl._api_get(id=self.boost_attribute, url=self.URL_PARTY+'members/')
 
         return [Member(data) for data in d]
 
@@ -189,20 +192,22 @@ class Costume(BandoriObject):
     '''
     def __init__(self, data : dict):
         super().__init__(data)
-        self.type = data["i_costume_type"]
-        self.card = data["card"]
-        self.member = data["member"]
-        self.name = data["name"]
+        self.type = data.get("i_costume_type")
+        self.card = data.get("card")
+        self.member = data.get("member")
+        self.name = data.get("name")
+
+        self.display_image = data.get("display_image")
     
     def get_costume_member(self):
-        b = BandoriLoader()
-        data = b._api_get(id=[self.member], url=self.URL_PARTY+'members/')
+        
+        data = self.bl._api_get(id=[self.member], url=self.URL_PARTY+'members/')
 
         return Member(data[0])
     
     def get_costume_card(self):
-        b = BandoriLoader()
-        data = b._api_get(id=[self.card], url=self.URL_PARTY+'cards/')
+        
+        data = self.bl._api_get(id=[self.card], url=self.URL_PARTY+'cards/')
 
         return Card(data[0])
 
@@ -212,9 +217,10 @@ class Item(BandoriObject):
     '''
     def __init__(self, data : dict):
         super().__init__(data)
-        self.name = data["name"]
-        self.type = data["i_type"]
-        self.description = data["m_description"]
+        self.name = data.get("name")
+        self.type = data.get("i_type")
+        self.description = data.get("m_description")
+        self.image = data.get("image")
 
 class AreaItem(BandoriObject):
     '''
@@ -222,16 +228,16 @@ class AreaItem(BandoriObject):
     '''
     def __init__(self, data):
         super().__init__(data)
-        self.name = data["name"]
-        self.area = data["area"] # TODO: match area to string (name of area)
-        self.type = data["i_type"]
-        self.instrument = data["i_instrument"]
-        
-        self.attribute = data["i_attribute"]
-        self.stat = data["i_boost_stat"]
-        self.max_level = data["max_level"]
-        self.values = data["value_list"]
-        self.description = data["about"]
+        self.name = data.get("name")
+        self.image = data.get("image")
+        self.area = data.get("area")    # TODO: match area id to a string - name of area (not available through api)
+        self.type = data.get("i_type")
+        self.instrument = data.get("i_instrument")
+        self.attribute = data.get("i_attribute")
+        self.boost_stat = data.get("i_boost_stat")
+        self.max_level = data.get("max_level")
+        self.values = data.get("value_list")
+        self.description = data.get("about")
 
 
 class Asset(BandoriObject):
@@ -248,46 +254,86 @@ class Asset(BandoriObject):
     '''
     def __init__(self, data):
         super().__init__(data)
-        self.type = data["i_type"]
+        self.type = data.get("i_type")
 
 class Comic(Asset):
     def __init__(self, data):
         super().__init__(data)
-        self.name = data["name"]
-        self.members = data["members"]
-    
+        self.name = data.get("name")
+        self.members = data.get("members")
+        self.image = data.get("image")
+        self.english_image = data.get("english_image")
+        self.taiwanese_image = data.get("taiwanese_image")
+        self.korean_image = data.get("korean_image")
+        self.band = data.get("i_band")
+        self.tags = data.get("c_tags")
+        self.event = data.get("event")
+        self.source = data.get("source")
+        self.source_link = data.get("source_link")
+        self.song = data.get("song")
+
     def get_comic_members(self):
-        b = BandoriLoader()
-        d = b._api_get(id=self.cameo, url=self.URL_PARTY+'members/')
+        
+        d = self.bl._api_get(id=self.cameo, url=self.URL_PARTY+'members/')
 
         return [Member(data) for data in d]
 
 class Background(Asset):
     def __init__(self, data):
         super().__init__(data)
-        self.name = data["name"]
+        self.name = data.get("name")
+        self.members = data.get("members")
+        self.image = data.get("image")
+        self.english_image = data.get("english_image")
+        self.taiwanese_image = data.get("taiwanese_image")
+        self.band = data.get("i_band")
+        self.tags = data.get("c_tags")
+        self.event = data.get("event")
+        self.source = data.get("source")
+        self.source_link = data.get("source_link")
+        self.song = data.get("song")
 
 class Stamp(Asset):
     def __init__(self, data):  
         super().__init__(data)
-        self.name = data["name"]
-        self.members = data["members"]
+        self.name = data.get("name")
+        self.members = data.get("members")
+        self.image = data.get("image")
+        self.english_image = data.get("english_image")
+        self.taiwanese_image = data.get("taiwanese_image")
+        self.band = data.get("i_band")
+        self.tags = data.get("c_tags")
+        self.event = data.get("event")
+        self.source = data.get("source")
+        self.source_link = data.get("source_link")
+        self.song = data.get("song")
     
     def get_stamp_members(self):
-        b = BandoriLoader()
-        d = b._api_get(id=self.members, url=self.URL_PARTY+'members/')
+        
+        d = self.bl._api_get(id=self.members, url=self.URL_PARTY+'members/')
 
         return [Member(data) for data in d]
 
 class Title(Asset):
     def __init__(self, data):
         super().__init__(data)
-        self.event = data["event"]
-        self.value = data["value"]
+        self.name = data.get("name")
+        self.members = data.get("members")
+        self.image = data.get("image")
+        self.english_image = data.get("english_image")
+        self.taiwanese_image = data.get("taiwanese_image")
+        self.korean_image = data.get("korean_image")
+        self.band = data.get("i_band")
+        self.tags = data.get("c_tags")
+        self.event = data.get("event")
+        self.source = data.get("source")
+        self.source_link = data.get("source_link")
+        self.song = data.get("song")
+        self.value = data.get("value")
 
-    def title_event(self):
-        b = BandoriLoader()
-        d = b._api_get(id=[self.event], url=self.URL_PARTY+'events/')
+    def get_title_event(self):
+        
+        d = self.bl._api_get(id=[self.event], url=self.URL_PARTY+'events/')
 
         return Event(d[0])
     
@@ -295,11 +341,34 @@ class Title(Asset):
 class Interface(Asset):
     def __init__(self, data):
         super().__init__(data)
-        self.name = data["name"]
+        self.name = data.get("name")
+        self.members = data.get("members")
+        self.image = data.get("image")
+        self.english_image = data.get("english_image")
+        self.taiwanese_image = data.get("taiwanese_image")
+        self.korean_image = data.get("korean_image")
+        self.band = data.get("i_band")
+        self.tags = data.get("c_tags")
+        self.event = data.get("event")
+        self.source = data.get("source")
+        self.source_link = data.get("source_link")
+        self.song = data.get("song")
 
 class OfficialArt(Asset):
     def __init__(self, data):
         super().__init__(data)
+        self.name = data.get("name")
+        self.members = data.get("members")
+        self.image = data.get("image")
+        self.english_image = data.get("english_image")
+        self.taiwanese_image = data.get("taiwanese_image")
+        self.korean_image = data.get("korean_image")
+        self.band = data.get("i_band")
+        self.tags = data.get("c_tags")
+        self.event = data.get("event")
+        self.source = data.get("source")
+        self.source_link = data.get("source_link")
+        self.song = data.get("song")
         
 
 
@@ -313,17 +382,19 @@ class Band(BandoriObject):
     '''
     def __init__(self, data : dict, id_name = 'bandId', region = 'en/'):
         super().__init__(data, id_name, region)
-        self.name = data["bandName"]
-        self.introduction = data["introductions"]
+        self.name = data.get("bandName")
+        self.introduction = data.get("introductions")
+        self.type = data.get("bandType")
 
         # IDs for bandori.party api
-        self.members = [data["leader"]+5, data["member1"]+5, data["member2"]+5, data["member3"]+5, data["member4"]+5]
+        self.members = [data.get("leader", -5)+5, data.get("member1", -5)+5,
+                         data.get("member2", -5)+5, data.get("member3", -5)+5, data.get("member4", -5)+5]
 
         # bands past Roselia have messed up members.
     
     def get_band_members(self):
-        b = BandoriLoader()
-        d = b._api_get(id=self.members, url=self.URL_PARTY+'members/')
+        
+        d = self.bl._api_get(id=self.members, url=self.URL_PARTY+'members/')
 
         return [Member(data) for data in d]
 
@@ -333,16 +404,22 @@ class Song(BandoriObject):
     '''
     def __init__(self, data : dict, id_name = 'musicId', region = 'en/'):
         super().__init__(data, id_name, region)
-        self.title = data["title"]
-        self.bgm = self.URL_GA_RES + data["bgmFile"]
-        self.thumb = self.URL_GA_RES + data["thumb"]
-        self.jacket = self.URL_GA_RES + data["jacket"]
-        self.band_name = data["bandName"]
-        self.band = data["bandId"]
-        self.difficulty = data["difficulty"]
-        self.how_to_get = data["howToGet"]
-        self.composer = data["composer"]
-        self.lyricist = data["lyricist"]
+        self.title = data.get("title")
+        self.bgm = self.URL_GA_RES + data.get("bgmFile", '')
+        self.thumb = self.URL_GA_RES + data.get("thumb", '')
+        self.jacket = self.URL_GA_RES + data.get("jacket", '')
+        self.band_name = data.get("bandName")
+        self.band = data.get("bandId")              # The band id is for api.bandori.ga and not, if applicable, for bandori.party api
+        self.difficulty = data.get("difficulty")
+        self.how_to_get = data.get("howToGet")
+        self.achievements = data.get("achievements")
+        self.published_at = data.get("publishedAt")
+        self.closed_at = data.get("closedAt")
+
+        self.composer = data.get("composer")
+        self.lyricist = data.get("lyricist")
+        self.arranger = data.get("arranger")
+
 
 class Gacha(BandoriObject):
     '''
@@ -350,13 +427,16 @@ class Gacha(BandoriObject):
     '''
     def __init__(self, data : dict, id_name = 'gachaId', region = 'en/'):
         super().__init__(data, id_name, region)
-        self.name = data["gachaName"]
-        self.start_date = data["publishedAt"]
-        self.end_date = data["closedAt"]
-        self.description = data["description"]
-        
-        self.period = data["gachaPeriod"]
-        self.type = data["gachaType"]
+        self.name = data.get("gachaName")
+        self.start_date = data.get("publishedAt")
+        self.end_date = data.get("closedAt")
+        self.description = data.get("description")
+        self.rates = data.get("rates")
+        self.annotation = data.get("annotation")
+
+        self.period = data("gachaPeriod")
+        self.sub_name = data.get("gachaSubName")
+        self.type = data.get("gachaType")
     
     def get_start_date(self):
         return datetime.datetime.fromtimestamp(int(self.start_date) / 1000)
