@@ -1,6 +1,6 @@
 # Contributing
 
-Help by adding more endpoints/your own features/fixes:
+You can help by adding more endpoints/your own features/fixes:
 
 1. Fork the repo
 2. Push changes to your own branch
