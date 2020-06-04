@@ -433,8 +433,7 @@ class Gacha(BandoriObject):
         self.description = data.get("description")
         self.rates = data.get("rates")
         self.annotation = data.get("annotation")
-
-        self.period = data("gachaPeriod")
+        self.gacha_period = data.get("gachaPeriod")
         self.sub_name = data.get("gachaSubName")
         self.type = data.get("gachaType")
     

@@ -1,7 +1,7 @@
 # Changelog
 All notable changes are documented in this file.
 
-## 0.4.0
+## 0.4.0 - 2020-06-04
 This should be largely compatible with older versions. The filter is an optional argument.
 
 ### Added
@@ -9,11 +9,15 @@ This should be largely compatible with older versions. The filter is an optional
 - _check_filters() function in BandoriLoader class; see above.
 - added attributes to base objects.
 - bandori objects initialize a bandoriLoader at start
+- bandoriLoader checks for failed requests (status code != 200)
 - updated documentation to reflect filters
+- basic test units added; travisCI added
 
 ### Fixed
 - AreaItem class: attribute **stat** changed to **boost_stat**
 - AreaItem class: function **title_event()** changed to **get_title_event()**
+- BandoriApi : get_events() changed to make it compatible with filters. If filters are present, it runs two times as slow, however.
+- Changed _api_get() description in BandoriLoader (it should return a list OR a dictionary)
 
 ## 0.3.1 - 2020-05-26
 ### Fixed

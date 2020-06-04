@@ -22,7 +22,7 @@ class BandoriLoader:
         '''
         res = requests.get(url)
         if res.status_code != 200:
-            raise FailedRequest(f'Could not get request from {url}')
+            raise BandoriLoader.FailedRequest(f'Could not get request from {url}')
         
         return res.json()
 
@@ -41,8 +41,8 @@ class BandoriLoader:
 
         while(True):
             response = requests.get(page)
-            if res.status_code != 200:
-                raise FailedRequest(f'Could not get request from {page}. Stopping operation.')
+            if response.status_code != 200:
+                raise BandoriLoader.FailedRequest(f'Could not get request from {page}. Stopping operation.')
             data = response.json()
 
             if data["next"] is None:
@@ -71,10 +71,10 @@ class BandoriLoader:
                 return False
         return True
     
-    def _api_get(self, id : list = [], url='', party=True, filters={}) -> list:
+    def _api_get(self, id : list = [], url='', party=True, filters={}):
         '''
         Handles getting responses from the APIs.
-        The result is always returned as a list.
+        The result may be returned as a list (of dicts) or a dict.
         '''
         if party:
             if not id:
@@ -116,14 +116,19 @@ class BandoriLoader:
 
         # adding all events to the list.
         while len(events) < total_count:
-            data = self._retrieve_response(url + str(id))
-            if self._check_filters(filters=filters, obj=data):
-                if 'detail' in data.keys():
-                    pass
-                else:
-                    data['id'] = id
-                    events.append(data)
+            try:
+                data = self._retrieve_response(url + str(id))
+                if self._check_filters(filters=filters, obj=data):
+                    if 'detail' in data.keys():
+                        pass
+                    else:
+                        data['id'] = id
+                        events.append(data)
+                    id += 1
+                    #print(id, end='\r')
+            except BandoriLoader.FailedRequest as e:
+                # a failed request is expected since some event ids are not used.
                 id += 1
-                #print(id, end='\r')
+                continue
 
         return events

@@ -37,7 +37,11 @@ class BandoriApi(BandoriLoader):
         If the list is empty, will get all events.
         '''
         if not id:
-            events = self._full_event_loader(url=self.URL_PARTY+'events/', filters=filters)
+            if not filters:
+                events = self._full_event_loader(url=self.URL_PARTY+'events/', filters=filters)
+            else:
+                events = self._full_event_loader(url=self.URL_PARTY+'events/', filters={})
+                events = [e for e in events if self._check_filters(filters=filters, obj=e)]
         else:
             events = self._api_get(id=id, url=self.URL_PARTY+'events/', filters=filters)
             for i, event in enumerate(events):
