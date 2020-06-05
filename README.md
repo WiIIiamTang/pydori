@@ -107,7 +107,7 @@ Returns all possible objects from the api as a dictionary. It is separated by ob
 ### Using filters
 A function can accept an optional "filters" parameter. If the list with ids is not empty, filters will be ignored. You are able to filter by the objects' attributes. The keys should be the attribute you want to filter, the values are what you want. For example,
 ```python
-c = api.get_cards(filters={'i_attribute' : 'Cool'}
+c = api.get_cards(filters={'i_attribute' : 'Cool'})
 ```
 will get all cards with the attribute *Cool*. For a list of all attributes you can filter by, see the **BandoriObject** section below.
 The keys of the dict can be any attribute of the objects (as a string), and the return value will be a list of objects with the desired attributes, provided that the value in the dict is valid. Filters are case sensitive (you need to put the exact, correct value).
