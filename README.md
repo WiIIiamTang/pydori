@@ -40,7 +40,7 @@ Here we get the current event and display the start and end times:
 from pydori import BandoriApi as api
 
 b = api()
-current = b.get_current_event()[0]
+current = b.get_current_event()
 
 print(current.get_start_date())
 print(current.get_end_date())
@@ -49,55 +49,72 @@ print(current.get_end_date())
 # Documentation
 
 ## BandoriApi
- ```pydori.BandoriApi(region = 'en/')```
+ ```pydori.BandoriApi(BandoriLoader)```
  
-A class that talks to the bandori APIs. All functions that should be used are in this class. It holds the following attributes:
+A class that talks to the bandori APIs. All functions that should be used are in this class.
 
-- **URL_PARTY** - A url to the bandori.party api
-
-- **URL_GA** - a url to the bandori.ga api
-
-- **URL_GA_RES** - a url to the bandori database resource api
+| Attributes | Description                                |
+|------------|--------------------------------------------|
+| URL_PARTY  | A url to the bandori.party api             |
+| URL_GA     | a url to the bandori.ga api                |
+| URL_GA_RES | a url to the bandori database resource api |
+| region     |                                            |
 
 ### Parameters
 - region(Optional[str]) - Region used for the bandori database api. Other options include 'jp/', 'tw/' (not tested), 'kr/' (not tested)
 
 ### Functions
-#### ```get_cards(id : list = [])```
+#### ```get_cards(id : list = [], filters : dict = {})```
 Returns a list of ```Card``` objects based on the ids provided. If the list is empty, all cards will be returned.
 
-#### ```get_members(id : list = [])```
+#### ```get_members(id : list = [], filters : dict = {})```
 Returns a list of ```Member``` objects based on the ids provided. If the list is empty, all members will be returned.
 
-#### ```get_events(id : list = [])```
+#### ```get_events(id : list = [], filters : dict = {})```
 Returns a list of ```Event``` objects based on the ids provided. If the list is empty, all members will be returned.
 
 #### ```get_current_event()```
 Returns the current event as an ```Event``` object in a list (it makes an internal call to ```get_events```). The current event is provided by the bandori database api, but the event data itself is from bandori.party.
 
-#### ```get_costumes(id : list = [])```
+#### ```get_costumes(id : list = [], filters : dict = {})```
 Returns a list of ```Costume``` objects based on the ids provided. If the list is empty, all costumes will be returned.
 
-#### ```get_items(id : list = [])```
+#### ```get_items(id : list = [], filters : dict = {})```
 Returns a list of ```Item``` objects based on the ids provided. If the list is empty, all items will be returned.
 
-#### ```get_areaitems(id : list = [])```
+#### ```get_areaitems(id : list = [], filters : dict = {})```
 Returns a list of ```AreaItem``` objects based on the ids provided. If the list is empty, all areaitems will be returned.
 
-#### ```get_assets(id : list = [])```
+#### ```get_assets(id : list = [], filters : dict = {})```
 Returns a dict where the keys are the different subtypes of ```Asset```, and the values are a list of those objects. If the input list is empty, all assets will be returned.
 
 Even when there is only one asset queried, a full dict will be returned - just with empty lists in some of the values.
 
 
-#### ```get_bands()```
+#### ```get_bands(filters : dict = {})```
 Returns a list of all bands as ```Band``` objects. You cannot get a specific band from id. This is region sensitive.
 
-#### ```get_songs(id : list = [])```
+#### ```get_songs(id : list = [], filters : dict = {})```
 Returns a list of ```Song``` objects based on the ids provided. If the list is empty, all songs will be returned. This is region sensitive.
 
-#### ```get_gachas(id : list = [])```
+#### ```get_gachas(id : list = [], filters : dict = {})```
 Returns a list of ```Gacha```objects based on the ids provided. If the list is empty, all gachas will be returned. This is region sensitive.
+
+#### ```get_all()```
+Returns all possible objects from the api as a dictionary. It is separated by object type.
+
+
+### Using filters
+A function can accept an optional "filters" parameter. If the list with ids is not empty, filters will be ignored. You are able to filter by the objects' attributes. The keys should be the attribute you want to filter, the values are what you want. For example,
+```python
+c = api.get_cards(filters={'i_attribute' : 'Cool'}
+```
+will get all cards with the attribute *Cool*. For a list of all attributes you can filter by, see the **BandoriObject** section below.
+The keys of the dict can be any attribute of the objects (as a string), and the return value will be a list of objects with the desired attributes, provided that the value in the dict is valid. Filters are case sensitive (you need to put the exact, correct value).
+
+**The filter attributes may have different format. For example, you can access a Card's rarity by doing : ```Card.rarity```
+but in order to filter by rarity, I would have to do something like : ```get_cards(filters={'i_rarity' : 4}```
+In other words, the _keys for filters_ are not always exactly the same as the attribute name. When _it is different_, the correct filter keyword will be indicated.**
 
 
 ## BandoriObject
@@ -105,27 +122,24 @@ Returns a list of ```Gacha```objects based on the ids provided. If the list is e
 
 Bandori objects are classes that represent data retrieved from the api. They are used to have quick access to certain attributes, and provide helpful methods on the data. They can be sorted by id. **They should not be normally instantiated (unless for debugging) and are meant as outputs from BandoriApi.** All BandoriObjects have the follow attributes:
 
-- **URL_PARTY** - A url to the bandori.party api
-
-- **URL_GA** - a url to the bandori.ga api
-
-- **URL_GA_RES** - a url to the bandori database resource api
-
-
-- **id** - The object's id
-
-- **data** - The original dict of the object's information from the api.
+| Attributes | Description                                                 |
+|------------|-------------------------------------------------------------|
+| URL_PARTY  | A url to the bandori.party api                              |
+| URL_GA     | a url to the bandori.ga api                                 |
+| URL_GA_RES | a url to the bandori database resource api                  |
+| id         | The object's id                                             |
+| data       | The original dict of the object's information from the api. |
+| region     |                                                             |
+| bl         | An instance of BandoriLoader                                |
 
 
 _Notes:_
 
-*Region select only works on certain methods - Song, Gacha, Band. See below*
+*Region select only works on certain methods, namely, Song, Gacha, Band. See below*
 
-*Not all attributes available from the api are recorded when creating these objects. It's best to work with the **data** dict as it contains everything.*
+*Some attributes may have a null value. The objects may not work with their intended functions. Check before using.*
 
-*Some attributes may have a null value and not work with their intended functions. Check before using.*
-
-*The bandori.party api is used for most classes. The Songs, Bands, and Gachas class make use of the bandori database api.*
+*The bandori.party api is used to retrieve data for most classes. Only Songs, Bands, and Gachas class make use of the bandori database api.*
 
 ### Parameters
 - data([dict]) - A python dictionary containing the data for the class
@@ -141,21 +155,39 @@ ___
 ### ```Card(BandoriObject)```
 Represents a Bang Dream card with the following attributes:
 
-- **member** - member id
-
-- **rarity** - card rarity
-
-- **attribute** - card attribute
-
-- **id** - The object's id
-
-- **name** - english name
-
-- **japanese_name**
-
-- **skill_type**
-
-- **cameo** - a list of cameo member ids
+| Attributes              | Description                                         | filter keyword (if different only) |
+|-------------------------|-----------------------------------------------------|------------------------------------|
+| member                  | The member id                                       |                                    |
+| rarity                  | card rarity (num of stars) as an int                | i_rarity                           |
+| attribute               | card attribute                                      | i_attribute                        |
+| name                    | card's english name                                 |                                    |
+| japanese_name           |                                                     |                                    |
+| is_promo                | True/False                                          |                                    |
+| is_original             | True/False                                          |                                    |
+| image                   | url to the card image                               |                                    |
+| image_trained           | url to the trained card image                       |                                    |
+| art                     | url to the card art                                 |                                    |
+| art_trained             | url to the trained card art                         |                                    |
+| transparent             | url to the transparent image                        |                                    |
+| transparent_trained     | url to the transparent trained image                |                                    |
+| skill_name              |                                                     |                                    |
+| japanese_skill_name     |                                                     |                                    |
+| skill_type              |                                                     | i_skill_type                       |
+| side_skill_type         |                                                     | i_side_skill_type                  |
+| skill_template          |                                                     |                                    |
+| skill_variables         |                                                     |                                    |
+| side_skill_variables    |                                                     |                                    |
+| full_skill              | The complete description of the skill at max level. |                                    |
+| performance_min         |                                                     |                                    |
+| performance_max         |                                                     |                                    |
+| performance_trained_max |                                                     |                                    |
+| technique_min           |                                                     |                                    |
+| technique_max           |                                                     |                                    |
+| technique_trained_max   |                                                     |                                    |
+| visual_min              |                                                     |                                    |
+| visual_max              |                                                     |                                    |
+| visual_trained_max      |                                                     |                                    |
+| cameo                   | A list of member ids that also appear in the card.  | cameo_members                      |
 
 #### Functions
 #### ```get_card_member()```
@@ -166,53 +198,40 @@ ___
 ### ```Member(BandoriObject)```
 Represents a Bang Dream member with the following attributes:
 
-- **name**
+| Attributes    | Description                                                  | filter keyword (if different only) |
+|---------------|--------------------------------------------------------------|------------------------------------|
+| name          | english name                                                 |                                    |
+| japanese_name |                                                              |                                    |
+| band          | The band name as a string                                    | i_band                             |
+| school        |                                                              |                                    |
+| year          | School year (First, Second, Third)                           | i_school_year                      |
+| romaji_cv     | CV name in romaji                                            | romaji_CV                          |
+| cv            | CV name                                                      | CV                                 |
+| birthday      | This doesn't seem realistic (maybe when they were released?) |                                    |
+| food_likes    |                                                              | food_likes                         |
+| food_dislikes |                                                              | food_dislikes                      |
+| astro         | member's astrological sign                                   | i_astrological_sign                |
+| instrument    |                                                              |                                    |
+| description   | description of member                                        |                                    |
 
-- **japanese_name**
-
-- **band** - the band name that the member belongs to
-
-- **school**
-
-- **year**
-
-- **romaji_cv**
-
-- **cv**
-
-- **birthday**
-
-- **food_likes**
-
-- **food_dislikes**
-
-- **astro** - astrological sign
-
-- **instrument**
-
-- **description**
 
 ___
 ### ```Event(BandoriObject)```
 Represents a bang dream event with the following attributes:
 
-- **name**
-
-- **japanese_name**
-
-- **type**
-
-- **[english | jp | tw | kr]_[start | end]_date** - start and end dates for the events, for different servers.
-
-- **versions_available** - versions of the game where the event is available
-
-- **main_card** - main card id
-
-- **secondary_card** - secondary card id
-
-- **boost_attribute**
-
-- **boost_members** - a list of member ids who are boosted during event
+| Attributes                                      | Description                                                     | filter keyword (if different only)                              |
+|-------------------------------------------------|-----------------------------------------------------------------|-----------------------------------------------------------------|
+| name                                            | english name                                                    |                                                                 |
+| japanese_name                                   |                                                                 |                                                                 |
+| type                                            | event type                                                      | i_type                                                          |
+| image                                           | url to event image                                              |                                                                 |
+| [english \| jp \| tw \| kr]_[start \| end]_date | start and end dates for the event as a timestamp (milliseconds) | [english \| (empty) \| taiwanese \| korean]_[start \| end]_date |
+| versions_available                              | versions available for event (as a list)                        | c_versions                                                      |
+| main_card                                       | id of main card                                                 |                                                                 |
+| secondary_card                                  |                                                                 |                                                                 |
+| boost_attribute                                 | attribute boosted for this event                                | i_boost_attribute                                               |
+| boost_stat                                      | stat boosted for this event                                     | i_boost_stat                                                    |
+| boost_members                                   | members boosted for this event                                  |                                                                 |
 
 #### Functions
 #### ```get_start_date(region = 'en')```
@@ -229,13 +248,14 @@ ___
 ### ```Costume(BandoriObject)```
 Represents an in-game costume with the following attributes:
 
-- **type**
+| Attributes    | Description                          | filter keyword (if different only) |
+|---------------|--------------------------------------|------------------------------------|
+| name          | english name                         |                                    |
+| type          | costume type                         | i_costume_type                     |
+| card          | card id associated to this costume   |                                    |
+| member        | member id associated to this costume |                                    |
+| display_image | url to the display image             |                                    |
 
-- **card** - card id if applicable
-
-- **member** - member id
-
-- **name**
 
 #### Functions
 #### ```get_costume_member()```
@@ -247,45 +267,59 @@ Returns a ```Card``` object corresponding to the Costume's **card** attribute
 ### ```Item(BandoriObject)```
 Represents an in-game item with the following attributes:
 
-- **name**
+| Attributes  | Description      | filter keyword (if different only) |
+|-------------|------------------|------------------------------------|
+| name        | english name     |                                    |
+| type        | item type        | i_type                             |
+| description |                  | m_description                      |
+| image       | url to the image |                                    |
 
-- **type**
-
-- **description**
 
 
 ---
 ### ```AreaItem(BandoriObject)```
 Represents an in-game area item with the following attributes:
 
-- **name**
+| Attributes  | Description                        | filter keyword (if different only) |
+|-------------|------------------------------------|------------------------------------|
+| name        | english name                       |                                    |
+| area        | area id                            |                                    |
+| type        |                                    | i_type                             |
+| image       | url to the image                   |                                    |
+| instrument  |                                    | i_instrument                       |
+| attribute   |                                    | i_attribute                        |
+| boost_stat  | what stat this item boosts         | i_boost_stat                       |
+| max_level   |                                    |                                    |
+| values      | a list of how much the item boosts | value_list                         |
+| description |                                    | about                              |
 
-- **area** - id for the area. Currently unusable.
-
-- **type**
-
-- **instrument**
-
-
-- **attribute**
-
-- **stat**
-
-- **max_level**
-
-- **values** - list of percentages that the item boosts at each level.
-
-- **description**
 
 ___
 ### ```Asset(BandoriObject)```
-Represents a Bang Dream asset as defined by bandori.party. Every asset has a **type**. There are multiple types of ```Asset``` from this:
+Represents a Bang Dream asset as defined by bandori.party. Every asset has a **type**.
+| Attributes  | Description                        | filter keyword (if different only) |
+|-------------|------------------------------------|------------------------------------|
+| type        | type of asset                      | i_type                             |
+
+There are multiple types of ```Asset``` from this:
+
 ### ```Comic(Asset)```
 A bandori comic.
 
-- **name**
-
-- **members** - a list of member ids (that appear in the comic)
+| Attributes      | Description                   | filter keyword (if different only) |
+|-----------------|-------------------------------|------------------------------------|
+| name            | english name                  |                                    |
+| members         | list of member ids            |                                    |
+| image           | url to image                  |                                    |
+| english_image   |                               |                                    |
+| taiwanese_image |                               |                                    |
+| korean_image    |                               |                                    |
+| band            | The name of the band          | i_band                             |
+| tags            |                               | c_tags                             |
+| event           | event id associated with this |                                    |
+| source          |                               |                                    |
+| source_link     |                               |                                    |
+| song            |                               |                                    |
 
 #### Functions
 #### ```get_comic_members()```
@@ -294,14 +328,39 @@ Returns a list of ```Member``` object corresponding to the Comic's **members** a
 ### ```Background(Asset)```
 A bandori background.
 
-- **name**
+| Attributes      | Description                   | filter keyword (if different only) |
+|-----------------|-------------------------------|------------------------------------|
+| name            | english name                  |                                    |
+| members         | list of member ids            |                                    |
+| image           | url to image                  |                                    |
+| english_image   |                               |                                    |
+| taiwanese_image |                               |                                    |
+| korean_image    |                               |                                    |
+| band            | The name of the band          | i_band                             |
+| tags            |                               | c_tags                             |
+| event           | event id associated with this |                                    |
+| source          |                               |                                    |
+| source_link     |                               |                                    |
+| song            |                               |                                    |
+
 
 ### ```Stamp(Asset)```
 A bandori stamp.
 
-- **name**
-
-- **members** - a list of member ids that appear in the stamp.
+| Attributes      | Description                   | filter keyword (if different only) |
+|-----------------|-------------------------------|------------------------------------|
+| name            | english name                  |                                    |
+| members         | list of member ids            |                                    |
+| image           | url to image                  |                                    |
+| english_image   |                               |                                    |
+| taiwanese_image |                               |                                    |
+| korean_image    |                               |                                    |
+| band            | The name of the band          | i_band                             |
+| tags            |                               | c_tags                             |
+| event           | event id associated with this |                                    |
+| source          |                               |                                    |
+| source_link     |                               |                                    |
+| song            |                               |                                    |
 
 #### Functions
 #### ```get_stamp_members()```
@@ -310,9 +369,21 @@ Returns a list of ```Member``` object corresponding to the Comic's **members** a
 ### ```Title(Asset)```
 A bandori profile title.
 
-- **event** - the event id this title is from.
-
-- **value** - TOP {value} of the event.
+| Attributes      | Description                   | filter keyword (if different only) |
+|-----------------|-------------------------------|------------------------------------|
+| name            | english name                  |                                    |
+| members         | list of member ids            |                                    |
+| image           | url to image                  |                                    |
+| english_image   |                               |                                    |
+| taiwanese_image |                               |                                    |
+| korean_image    |                               |                                    |
+| band            | The name of the band          | i_band                             |
+| tags            |                               | c_tags                             |
+| event           | event id associated with this |                                    |
+| source          |                               |                                    |
+| source_link     |                               |                                    |
+| song            |                               |                                    |
+| value           | top {value} of the event      |                                    |
 
 #### Functions
 #### ```title_event()```
@@ -321,20 +392,54 @@ Returns an ```Event``` object corresponding to the Title's **event** attribute.
 ### ```Interface(Asset)```
 A bandori interface (mostly pictures).
 
-- **name**
+| Attributes      | Description                   | filter keyword (if different only) |
+|-----------------|-------------------------------|------------------------------------|
+| name            | english name                  |                                    |
+| members         | list of member ids            |                                    |
+| image           | url to image                  |                                    |
+| english_image   |                               |                                    |
+| taiwanese_image |                               |                                    |
+| korean_image    |                               |                                    |
+| band            | The name of the band          | i_band                             |
+| tags            |                               | c_tags                             |
+| event           | event id associated with this |                                    |
+| source          |                               |                                    |
+| source_link     |                               |                                    |
+| song            |                               |                                    |
 
 ### ```OfficialArt(Asset)```
 Bandori official art.
+
+| Attributes      | Description                   | filter keyword (if different only) |
+|-----------------|-------------------------------|------------------------------------|
+| name            | english name                  |                                    |
+| members         | list of member ids            |                                    |
+| image           | url to image                  |                                    |
+| english_image   |                               |                                    |
+| taiwanese_image |                               |                                    |
+| korean_image    |                               |                                    |
+| band            | The name of the band          | i_band                             |
+| tags            |                               | c_tags                             |
+| event           | event id associated with this |                                    |
+| source          |                               |                                    |
+| source_link     |                               |                                    |
+| song            |                               |                                    |
+
 
 ___
 ### ```Band(BandoriObject)```
 This takes in a dict from the bandori database api (so it is by region). Represents a Bang Dream band with the following attributes:
 
-- **name**
+| Attributes   | Description                      | filter keyword (if different only) |
+|--------------|----------------------------------|------------------------------------|
+| name         | english name                     | bandName                           |
+| introduction |                                  | introductions                      |
+| type         |                                  | bandType                           |
+| members      | a list of member ids of the band | **should not filter**              |
 
-- **introduction**
 
-- **members** - The bandori.party member ids for the members in this band. Note that any bands past Roselia have wrong ids for some reason.
+*Bands past Roselia have messed up member ids*.
+
 
 #### Functions
 #### ```get_band_members()```
@@ -344,39 +449,45 @@ ___
 ### ```Song(BandoriObject)```
 This takes in a dict from the bandori database api (so it is by region). Represents a Bang Dream in-game song with the following attributes:
 
-- **title**
+| Attributes   | Description                   | filter keyword (if different only) |
+|--------------|-------------------------------|------------------------------------|
+| title        | song title                    |                                    |
+| bgm          | bgm url link                  | **should not filter**              |
+| thumb        | thumbnail url                 | **should not filter**              |
+| jacket       | jacket url                    | **should not filter**              |
+| band_name    |                               | bandName                           |
+| band         | band id                       | bandId                             |
+| difficulty   | a list of difficulties        |                                    |
+| how_to_get   | how to get the song           | howToGet                           |
+| achievements | rewards for clearing the song |                                    |
+| published_at |                               | publishedAt                        |
+| closed_at    |                               | closedAt                           |
+| composer     |                               |                                    |
+| lyricist     |                               |                                    |
+| arranger     |                               |                                    |
 
-- **bgm** - link to song mp3.
-
-- **thumb**
-
-- **jacket**
-
-- **band_name**
-
-- **band** - the band id.
-
-- **difficulty** 
-
-- **how_to_get**
-
-- **composer**
-
-- **lyricist**
 
 ---
 ### ```Gacha(BandoriObject)```
 This takes in a dict from the bandori database api(so it is by region). Represents a Bang Dream gacha with the following attributes:
 
-- **name**
+| Attributes   | Description             | filter keyword (if different only) |
+|--------------|-------------------------|------------------------------------|
+| name         | gacha name              | gachaName                          |
+| start_date   | start date as timestamp | publishedAt                        |
+| end_date     | end date as timestamp   | closedAt                           |
+| description  |                         |                                    |
+| rates        | a list of gacha rates   |                                    |
+| annotation   |                         |                                    |
+| gacha_period |                         | gachaPeriod                        |
+| sub_name     |                         | gachaSubName                       |
+| type         | gacha type              | gachaType                          |
+|              |                         |                                    |
+|              |                         |                                    |
+|              |                         |                                    |
+|              |                         |                                    |
+|              |                         |                                    |
 
-- **[start | end]_date** - a *timestamp* in milliseconds for the start/end dates of the event.
-
-- **description**
-
-- **period**
-
-- **type**
 
 #### Functions
 #### ```get_start_date()```
@@ -388,7 +499,7 @@ See ```get_start_date()```
 ## BandoriLoader
 ```pydori.bandori_loader.BandoriLoader(region = 'en/')```
 
-BandoriApi inherits from this class. It is only meant for internal use, and its purpose is to make api calls to bandori.party and bandori.database and return the result as dictionaries or lists. It should not be normally instantiated, but is useful sometimes for debugging.
+BandoriApi inherits from this class. **It is only meant for internal use, and its purpose is to make api calls to bandori.party and bandori.database and return the result as dictionaries or lists.** It should not be normally instantiated, but is useful sometimes for debugging.
 
 
 # Credits
