@@ -52,7 +52,7 @@ class Card(BandoriObject):
         self.side_skill_template = data.get("side_skill_template")
         self.side_skill_variables = data.get("side_skill_variables")
         self.full_skill = data.get("full_skill")
-        self.performance_min = data.get("performnce_min")
+        self.performance_min = data.get("performance_min")
         self.performance_max = data.get("performance_max")
         self.performance_trained_max = data.get("performance_trained_max")
         self.technique_min = data.get("technique_min")
@@ -82,7 +82,7 @@ class Member(BandoriObject):
     def __init__(self, data : dict):
         super().__init__(data)
         self.name = data.get("name")
-        self.japanese_name = data.get("japaense_name")
+        self.japanese_name = data.get("japanese_name")
         self.band = data.get("i_band")                    # TODO: match band to Band object
         self.school = data.get("school")
         self.year = data.get("i_school_year")
@@ -122,7 +122,7 @@ class Event(BandoriObject):
         self.secondary_card = data.get("secondary_card")
         self.boost_attribute = data.get("i_boost_attribute")
         self.boost_stat = data.get("i_boost_stat")
-        self.boost_members = data["boost_members"]
+        self.boost_members = data.get("boost_members")
 
     def get_start_date(self, region = 'en'):
         if region == 'en':
@@ -286,6 +286,7 @@ class Background(Asset):
         self.image = data.get("image")
         self.english_image = data.get("english_image")
         self.taiwanese_image = data.get("taiwanese_image")
+        self.korean_image = data.get("korean_image")
         self.band = data.get("i_band")
         self.tags = data.get("c_tags")
         self.event = data.get("event")
@@ -301,6 +302,7 @@ class Stamp(Asset):
         self.image = data.get("image")
         self.english_image = data.get("english_image")
         self.taiwanese_image = data.get("taiwanese_image")
+        self.korean_image = data.get("korean_image")
         self.band = data.get("i_band")
         self.tags = data.get("c_tags")
         self.event = data.get("event")

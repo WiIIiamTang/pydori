@@ -7,6 +7,8 @@ All notable changes are documented in this file.
 
 ### Fixed
 - python version requirements updated
+- fixed cards not getting performance_min properly
+- fixed members not getting japanese_name properly
 
 ## 0.4.0 - 2020-06-04
 This should be largely compatible with older versions. The filter is an optional argument.
