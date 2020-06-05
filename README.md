@@ -386,7 +386,7 @@ A bandori profile title.
 | value           | top {value} of the event      |                                    |
 
 #### Functions
-#### ```title_event()```
+#### ```get_title_event()```
 Returns an ```Event``` object corresponding to the Title's **event** attribute.
 
 ### ```Interface(Asset)```
