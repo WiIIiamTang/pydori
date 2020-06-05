@@ -296,10 +296,15 @@ Represents an in-game area item with the following attributes:
 
 ___
 ### ```Asset(BandoriObject)```
+
+
 Represents a Bang Dream asset as defined by bandori.party. Every asset has a **type**.
+
+
 | Attributes  | Description                        | filter keyword (if different only) |
 |-------------|------------------------------------|------------------------------------|
 | type        | type of asset                      | i_type                             |
+
 
 There are multiple types of ```Asset``` from this:
 
@@ -482,11 +487,6 @@ This takes in a dict from the bandori database api(so it is by region). Represen
 | gacha_period |                         | gachaPeriod                        |
 | sub_name     |                         | gachaSubName                       |
 | type         | gacha type              | gachaType                          |
-|              |                         |                                    |
-|              |                         |                                    |
-|              |                         |                                    |
-|              |                         |                                    |
-|              |                         |                                    |
 
 
 #### Functions
