@@ -83,6 +83,8 @@ class Member(BandoriObject):
         super().__init__(data)
         self.name = data.get("name")
         self.japanese_name = data.get("japanese_name")
+        self.image = data.get("image")
+        self.square_image = data.get("square_image")
         self.band = data.get("i_band")                    # TODO: match band to Band object
         self.school = data.get("school")
         self.year = data.get("i_school_year")
