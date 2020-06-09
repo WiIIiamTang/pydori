@@ -46,6 +46,15 @@ print(current.get_start_date())
 print(current.get_end_date())
 ```
 
+Pydori accepts filters for the objects, as a dictionary. If a list of ids are present, then the filters will be ignored completely. This example shows how to get all songs by the band "Roselia".
+
+```python
+import pydori
+
+b = pydori.BandoriApi()
+roselia_songs = b.get_songs(id=[], filters={'bandName' : 'Roselia'})
+```
+
 # Documentation
 
 ## BandoriApi
