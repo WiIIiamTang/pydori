@@ -133,8 +133,6 @@ class BandoriApi(BandoriLoader):
         '''
         d = self._api_get(id=id, url=self.URL_GA+'music/', party=False, filters=filters)
 
-        if not id:
-            d = d["data"]
 
         return [Song(data, region=self.region) for data in d]
     
@@ -146,8 +144,6 @@ class BandoriApi(BandoriLoader):
         '''
         d = self._api_get(id=id, url=self.URL_GA+'gacha/', party=False, filters=filters)
 
-        if not id:
-            d = d["data"]
 
         return [Gacha(data, region=self.region) for data in d]
     

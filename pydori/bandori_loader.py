@@ -67,7 +67,7 @@ class BandoriLoader:
             return True
         
         for key, value in filters.items():
-            if obj[key] != value:
+            if obj.get(key) != value:
                 return False
         return True
     
@@ -89,7 +89,24 @@ class BandoriLoader:
         
         else:
             if not id:
-                return self._retrieve_response(url)
+                d = self._retrieve_response(url)
+
+                if type(d) == dict and d.get('data') is not None:
+                    d = d['data']
+                    res = []
+
+                    for o in d:
+                        if self._check_filters(obj=o, filters=filters):
+                            res.append(o)
+                
+                    return res
+                else:
+                    res = []
+                    for o in d:
+                        if self._check_filters(obj=o, filters=filters):
+                            res.append(o)
+                    return res
+
             else:
                 res = []
                 for i in id:

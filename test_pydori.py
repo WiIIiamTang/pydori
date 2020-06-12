@@ -102,7 +102,7 @@ def test_assets(api_en, id, filters, expected):
 @pytest.mark.parametrize('filters, expected', [
     ({}, 'Afterglow')
 ])
-def test_areaitems(api_en, filters, expected):
+def test_bands(api_en, filters, expected):
     bands = api_en.get_bands(filters=filters)
     result = bands[1]
 
@@ -117,6 +117,9 @@ def test_areaitems(api_en, filters, expected):
 def test_songs(api_en, id, filters, expected):
     songs = api_en.get_songs(id=id, filters=filters)
     result = songs[1]
+
+    if expected == 'Legendary (English Version)':
+        result = songs[0]
 
     assert result.title == expected
 
