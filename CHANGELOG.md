@@ -1,6 +1,12 @@
 # Changelog
 All notable changes are documented in this file.
 
+## 0.4.3
+This brings a couple of fixes related to filters not working.
+- Songs, Bands, and Gachas will now use the filters properly
+- filters now work alongside ids (before, if a list of ids was present, nothing would be filtered)
+- test cases updated to the right values
+
 ## 0.4.2 - 2020-06-12
 - Bandori Members actually have an image and square_image now
 

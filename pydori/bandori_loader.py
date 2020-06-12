@@ -83,7 +83,9 @@ class BandoriLoader:
             else:
                 res = []
                 for i in id:
-                    res.append(self._retrieve_response(url + str(i)))
+                    obj = self._retrieve_response(url + str(i))
+                    if self._check_filters(obj=obj, filters=filters):
+                        res.append(obj)
 
                 return res
         
@@ -110,7 +112,9 @@ class BandoriLoader:
             else:
                 res = []
                 for i in id:
-                    res.append(self._retrieve_response(url + str(i)))
+                    obj = self._retrieve_response(url + str(i))
+                    if self._check_filters(obj=obj, filters=filters):
+                        res.append(obj)
                 
                 return res
     
