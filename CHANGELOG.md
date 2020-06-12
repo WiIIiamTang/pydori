@@ -1,7 +1,7 @@
 # Changelog
 All notable changes are documented in this file.
 
-## 0.4.2
+## 0.4.2 - 2020-06-12
 - Bandori Members actually have an image and square_image now
 
 ## 0.4.1 - 2020-06-04
