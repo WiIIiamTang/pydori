@@ -46,7 +46,7 @@ print(current.get_start_date())
 print(current.get_end_date())
 ```
 
-Pydori accepts filters for the objects, as a dictionary. If a list of ids are present, then the filters will be ignored completely. This example shows how to get all songs by the band "Roselia".
+Pydori accepts filters for the objects, as a dictionary. This example shows how to get all songs by the band "Roselia".
 
 ```python
 import pydori
@@ -114,15 +114,17 @@ Returns all possible objects from the api as a dictionary. It is separated by ob
 
 
 ### Using filters
-A function can accept an optional "filters" parameter. If the list with ids is not empty, filters will be ignored. You are able to filter by the objects' attributes. The keys should be the attribute you want to filter, the values are what you want. For example,
+A function can accept an optional "filters" parameter. You are able to filter by the objects' attributes. The keys should be the attribute you want to filter, the values are what you want. For example,
 ```python
 c = api.get_cards(filters={'i_attribute' : 'Cool'})
 ```
 will get all cards with the attribute *Cool*. For a list of all attributes you can filter by, see the **BandoriObject** section below.
+
+#### Key-value pairs in a filter
 The keys of the dict can be any attribute of the objects (as a string), and the return value will be a list of objects with the desired attributes, provided that the value in the dict is valid. Filters are case sensitive (you need to put the exact, correct value).
 
 **The filter attributes may have different format. For example, you can access a Card's rarity by doing : ```Card.rarity```
-but in order to filter by rarity, I would have to do something like : ```get_cards(filters={'i_rarity' : 4}```
+but in order to *filter by rarity*, I would have to do something like : ```get_cards(filters={'i_rarity' : 4}```
 In other words, the _keys for filters_ are not always exactly the same as the attribute name. When _it is different_, the correct filter keyword will be indicated.**
 
 
