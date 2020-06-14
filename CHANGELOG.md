@@ -1,7 +1,7 @@
 # Changelog
 All notable changes are documented in this file.
 
-## 0.4.3
+## 0.4.3 - 2020-06-13
 This brings a couple of fixes related to filters not working.
 - Songs, Bands, and Gachas will now use the filters properly
 - filters now work alongside ids (before, if a list of ids was present, nothing would be filtered)
