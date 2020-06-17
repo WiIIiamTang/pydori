@@ -76,7 +76,7 @@ roselia_songs = b.get_songs(id=[], filters={'bandName' : 'Roselia'})
 # Documentation
 
 ## BandoriApi
- ```pydori.BandoriApi```
+ ```pydori.BandoriApi(region = 'en/')```
  
 A class that talks to the bandori APIs. All functions that should be used are in this class.
 
