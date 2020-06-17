@@ -1,18 +1,3 @@
-# models-only-dicts
-This branch is experimental. Trying to separate the two APIs - the user would be able to choose to use bandori.party or bandori database.
-
-Working on:
- - making separate models for b party and b database
- - adding missing models for b database
- - integrating the change into BandoriApi
-
- 
-Once done:
- - check to dev
-
- __
-
-
 # Pydori
 
   
@@ -21,12 +6,19 @@ Once done:
 [![Build Status](https://travis-ci.org/WiIIiamTang/pydori.svg?branch=master)](https://travis-ci.org/WiIIiamTang/pydori)
   
 
-A python package to simplify usage of the bandori party and bandori database public APIs.
+A python package to provide easier access to the bandori party and bandori database public APIs.
 
   
 
 # Info
-Although both bandori.party and bandori database provide extensive public bang dream api's, there is currently not much documentation to help navigate through them. This package attempts to simplify accessing the various endpoints they provide. Not everything is available through this package, but the main ones should be here. This package consolidates both the bandori.party and bandori.ga APIs - for example, songs are not available through the bandori.party API, so all music-related data is gotten from bandori database.
+Both bandori.party and bandori database provide extensive public bang dream apis. This package attempts to simplify accessing the various endpoints they provide.
+
+This primarly uses the bandori.party api. When it was not possible to find a certain endpoint in bandori.party, the bandori database api was used instead (This is the case with all music, gacha, and more). In the future, there may be the option to have the choice to use only one of the apis.
+
+
+ - [x] Bandori party API endpoints: 100%
+ - [ ] Bandori database API endpoints: Only songs, gacha, bands currently
+ - [x] Endpoint documentation: done
   
 
 # Installation
@@ -35,7 +27,19 @@ Use pip to install:
 
 ``` pip install pydori ```
 
-  
+
+# Quick start
+
+Working with pydori is done through the ```BandoriApi``` class. Create an instance of the class (and indicate your region if you're going to be using the bandori database api) and start using the functions provided.
+
+The syntax for the class functions is simple: ```get_``` followed by whatever type of bang dream content you want.
+
+```python
+pydori.BandoriApi().get_cards()
+```
+This gets the cards. See the documentation for the full list of things you can request.
+
+Functions also have optional arguments: **id** and **filters**. ```id``` is a list of integers representing the ids of the objects you want. ```filters``` is a dictionary of filters to use when searching. See the documentation on filters for more details.
 
 # Example
 This example instantiates a BandoriApi object, gets a card by ID, and displays the card's name.
@@ -72,7 +76,7 @@ roselia_songs = b.get_songs(id=[], filters={'bandName' : 'Roselia'})
 # Documentation
 
 ## BandoriApi
- ```pydori.BandoriApi(BandoriLoader)```
+ ```pydori.BandoriApi```
  
 A class that talks to the bandori APIs. All functions that should be used are in this class.
 
@@ -143,7 +147,7 @@ In other words, the _keys for filters_ are not always exactly the same as the at
 
 
 ## BandoriObject
-```pydori.base_objects.BandoriObject(data : dict, id_name = 'id', region = 'en/')```
+```pydori.models.base.BandoriObject(data : dict, id_name = 'id', region = 'en/')```
 
 Bandori objects are classes that represent data retrieved from the api. They are used to have quick access to certain attributes, and provide helpful methods on the data. They can be sorted by id. **They should not be normally instantiated (unless for debugging) and are meant as outputs from BandoriApi.** All BandoriObjects have the follow attributes:
 
@@ -177,7 +181,7 @@ _Notes:_
 The following classes inherit from BandoriObject:
 
 ___
-### ```Card(BandoriObject)```
+### ```pydori.models.ptymodels.Card(BandoriObject)```
 Represents a Bang Dream card with the following attributes:
 
 | Attributes              | Description                                         | filter keyword (if different only) |
@@ -241,7 +245,7 @@ Represents a Bang Dream member with the following attributes:
 
 
 ___
-### ```Event(BandoriObject)```
+### ```pydori.models.ptymodels.Event(BandoriObject)```
 Represents a bang dream event with the following attributes:
 
 | Attributes                                      | Description                                                     | filter keyword (if different only)                              |
@@ -302,7 +306,7 @@ Represents an in-game item with the following attributes:
 
 
 ---
-### ```AreaItem(BandoriObject)```
+### ```pydori.models.ptymodels.AreaItem(BandoriObject)```
 Represents an in-game area item with the following attributes:
 
 | Attributes  | Description                        | filter keyword (if different only) |
@@ -320,7 +324,7 @@ Represents an in-game area item with the following attributes:
 
 
 ___
-### ```Asset(BandoriObject)```
+### ```pydori.models.ptymodels.Asset(BandoriObject)```
 
 
 Represents a Bang Dream asset as defined by bandori.party. Every asset has a **type**.
@@ -333,7 +337,7 @@ Represents a Bang Dream asset as defined by bandori.party. Every asset has a **t
 
 There are multiple types of ```Asset``` from this:
 
-### ```Comic(Asset)```
+### ```pydori.models.ptymodels.Comic(Asset)```
 A bandori comic.
 
 | Attributes      | Description                   | filter keyword (if different only) |
@@ -352,10 +356,10 @@ A bandori comic.
 | song            |                               |                                    |
 
 #### Functions
-#### ```get_comic_members()```
+#### ```pydori.models.ptymodels.get_comic_members()```
 Returns a list of ```Member``` object corresponding to the Comic's **members** attribute
 
-### ```Background(Asset)```
+### ```pydori.models.ptymodels.Background(Asset)```
 A bandori background.
 
 | Attributes      | Description                   | filter keyword (if different only) |
@@ -374,7 +378,7 @@ A bandori background.
 | song            |                               |                                    |
 
 
-### ```Stamp(Asset)```
+### ```pydori.models.ptymodels.Stamp(Asset)```
 A bandori stamp.
 
 | Attributes      | Description                   | filter keyword (if different only) |
@@ -437,7 +441,7 @@ A bandori interface (mostly pictures).
 | source_link     |                               |                                    |
 | song            |                               |                                    |
 
-### ```OfficialArt(Asset)```
+### ```pydori.models.ptymodels.OfficialArt(Asset)```
 Bandori official art.
 
 | Attributes      | Description                   | filter keyword (if different only) |
@@ -457,7 +461,7 @@ Bandori official art.
 
 
 ___
-### ```Band(BandoriObject)```
+### ```pydori.models.gamodels.Band(BandoriObject)```
 This takes in a dict from the bandori database api (so it is by region). Represents a Bang Dream band with the following attributes:
 
 | Attributes   | Description                      | filter keyword (if different only) |
@@ -498,7 +502,7 @@ This takes in a dict from the bandori database api (so it is by region). Represe
 
 
 ---
-### ```Gacha(BandoriObject)```
+### ```pydori.models.gamodels.Gacha(BandoriObject)```
 This takes in a dict from the bandori database api(so it is by region). Represents a Bang Dream gacha with the following attributes:
 
 | Attributes   | Description             | filter keyword (if different only) |
@@ -522,9 +526,9 @@ See ```get_start_date()```
 
 
 ## BandoriLoader
-```pydori.bandori_loader.BandoriLoader(region = 'en/')```
+```pydori.loader.BandoriLoader(region = 'en/')```
 
-BandoriApi inherits from this class. **It is only meant for internal use, and its purpose is to make api calls to bandori.party and bandori.database and return the result as dictionaries or lists.** It should not be normally instantiated, but is useful sometimes for debugging.
+BandoriApi inherits from this class. There are only internal use functions here. Its purpose is to make api calls to bandori.party and bandori.database and return the result as dictionaries or lists. **It should not be normally instantiated**, but is useful sometimes for debugging.
 
 
 # Credits

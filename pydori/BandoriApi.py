@@ -10,10 +10,12 @@ class BandoriApi(BandoriLoader):
     '''
   
     
-    def __init__(self, region = 'en/', party=True):
+    def __init__(self, region = 'en/'):
         super().__init__(region)
-        self.party=party
 
+
+###############################################################################
+# Functions for Bandori party
 
     def get_cards(self, id : list = [], filters={}):
         '''
@@ -117,6 +119,9 @@ class BandoriApi(BandoriLoader):
         return sorted
     
 
+###############################################################################
+# Functions for Bandori database
+
     def get_bands(self, filters={}):
         '''
         Get all bands as a list of Band objects.
@@ -148,10 +153,13 @@ class BandoriApi(BandoriLoader):
 
 
         return [Gacha(data, region=self.region) for data in d]
-    
+
+
+
+##############################################################################################
     def get_all(self):
         '''
-        Get all possible objects from the apis
+        Get all possible objects from the apis as a dictionary.
         '''
         d = {'cards': [], 'members': [], 'events': [], 'costumes': [], 'items': [],
                 'areaitems': [], 'assets' : {}, 'bands' : [], 'songs' : [], 'gachas' : []}
