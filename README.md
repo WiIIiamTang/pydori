@@ -15,7 +15,7 @@ A python package to provide easier access to the bandori party and bandori datab
 # Info
 Both bandori.party and bandori database provide extensive public bang dream apis. This package attempts to simplify accessing the various endpoints they provide.
 
-This primarly uses the bandori.party api. When it was not possible to find a certain endpoint in bandori.party, the bandori database api was used instead (This is the case with all music, gacha, and more). In the future, there may be the option to have the choice to use only one of the apis.
+This primarly uses the bandori.party api. When it was not possible to find a certain endpoint in bandori.party, the bandori database api was used instead (This is the case with all music, gacha, and more).
 
 
  - [x] Bandori party API endpoints: 100%
@@ -42,6 +42,8 @@ pydori.BandoriApi().get_cards()
 This gets the cards. See the documentation for the full list of things you can request.
 
 Functions also have optional arguments: **id** and **filters**. ```id``` is a list of integers representing the ids of the objects you want. ```filters``` is a dictionary of filters to use when searching. See the documentation on filters for more details.
+
+Note again that this relies mainly on the bandori.party api. So Cards, Members, etc. all represent data from bandori party. I've noticed that some of the data - specifically, card names - does not match the english server data. In the future, there may be the option to have the choice to use only one of the apis and switch back and forth.
 
 # Example
 This example instantiates a BandoriApi object, gets a card by ID, and displays the card's name.
