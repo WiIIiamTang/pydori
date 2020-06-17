@@ -274,7 +274,7 @@ Returns a ```Card``` object corresponding to the Event's **secondary_card** id
 #### ```get_boost_members()```
 Returns a list of ```Member``` corresponding to the Event's **boost_members** ids
 ___
-### ```Costume(BandoriObject)```
+### ```pydori.models.ptymodels.Costume(BandoriObject)```
 Represents an in-game costume with the following attributes:
 
 | Attributes    | Description                          | filter keyword (if different only) |
@@ -293,7 +293,7 @@ Returns a ```Member``` object corresponding to the Costume's **member** attribut
 Returns a ```Card``` object corresponding to the Costume's **card** attribute
 
 ---
-### ```Item(BandoriObject)```
+### ```pydori.models.ptymodels.Item(BandoriObject)```
 Represents an in-game item with the following attributes:
 
 | Attributes  | Description      | filter keyword (if different only) |
@@ -400,7 +400,7 @@ A bandori stamp.
 #### ```get_stamp_members()```
 Returns a list of ```Member``` object corresponding to the Comic's **members** attribute
 
-### ```Title(Asset)```
+### ```pydori.models.ptymodels.Title(Asset)```
 A bandori profile title.
 
 | Attributes      | Description                   | filter keyword (if different only) |
@@ -423,7 +423,7 @@ A bandori profile title.
 #### ```get_title_event()```
 Returns an ```Event``` object corresponding to the Title's **event** attribute.
 
-### ```Interface(Asset)```
+### ```pydori.models.ptymodels.Interface(Asset)```
 A bandori interface (mostly pictures).
 
 | Attributes      | Description                   | filter keyword (if different only) |
@@ -480,7 +480,7 @@ This takes in a dict from the bandori database api (so it is by region). Represe
 Returns a list of ```Member``` object corresponding to the Band's **members** attribute
 
 ___
-### ```Song(BandoriObject)```
+### ```pydori.models.gamodels.Song(BandoriObject)```
 This takes in a dict from the bandori database api (so it is by region). Represents a Bang Dream in-game song with the following attributes:
 
 | Attributes   | Description                   | filter keyword (if different only) |
