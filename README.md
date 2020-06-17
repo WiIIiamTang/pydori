@@ -32,20 +32,18 @@ Use pip to install:
 
 # Usage
 
-Working with pydori is done through the ```BandoriApi``` class. Create an instance of the class (and indicate your region if you're going to be using the bandori database api) and start using the functions provided.
-
-The syntax for the class functions is simple: ```get_``` followed by whatever type of bang dream content you want.
+  1. Working with pydori is done through the ```BandoriApi``` class. Create an instance of the class (and indicate your region if you're going to be using the bandori database api) and start using the functions provided. The syntax for the class functions is simple: ```get_``` followed by whatever type of bang dream content you want.
 
 ```python
 pydori.BandoriApi().get_cards()
 ```
-This gets the cards. See the documentation for the full list of things you can request.
+*This gets the cards. See the documentation for the full list of things you can request.*
 
-Functions also have optional arguments: **id** and **filters**. ```id``` is a list of integers representing the ids of the objects you want. ```filters``` is a dictionary of filters to use when searching. See the documentation on filters for more details.
+  2. Functions also have optional arguments: **id** and **filters**. ```id``` is a list of integers representing the ids of the objects you want. ```filters``` is a dictionary of filters to use when searching. See the documentation on filters for more details.
 
-Note, again, that this relies mainly on the bandori.party api. So Cards, Members, etc. all represent data from bandori party. I've noticed that some of the data - specifically, card names - does not match the english server data. In the future, there may be the option to have the choice to use only one of the apis and switch back and forth.
+  3. Note, again, that this package relies mainly on the bandori.party api. So Cards, Members, etc. all represent data from bandori party. I've noticed that some of the data - specifically, card names - does not match the english server data. In the future, there may be the option to have the choice to use only one of the apis and switch back and forth. **The only functions that make use of the bandori database api are: Songs, Gachas, Bands.**
 
-The only functions that make use of the bandori database api are: Songs, Gachas, Bands.
+  4. The functions return **lists** (except for assets, which is a dict) that contain **BandoriObjects**. You can either directly access their info through their attributes, or access the raw data (the original json) with the ``.data`` attribute.
 
 # Example
 This example instantiates a BandoriApi object, gets a card by ID, and displays the card's name.
