@@ -5,6 +5,8 @@ Working on:
  - making separate models for b party and b database
  - adding missing models for b database
  - integrating the change into BandoriApi
+
+ 
 Once done:
  - check to dev
 
