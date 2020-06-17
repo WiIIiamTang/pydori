@@ -1,6 +1,9 @@
 # Changelog
 All notable changes are documented in this file.
 
+## 0.5.0
+Files have been reorganized in this update: the "models" directory contains base.py, gamodels.py, ptymodels.py which are just (separated) pieces of the original base_objects.py from previous versions. Also bandori_loader.py was renamed to loader.py.
+
 ## 0.4.3 - 2020-06-13
 This brings a couple of fixes related to filters not working.
 - Songs, Bands, and Gachas will now use the filters properly
