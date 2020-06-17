@@ -1,4 +1,5 @@
-from .models import *
+from .models.gamodels import *
+from .models.ptymodels import *
 from .loader import BandoriLoader
 
 
@@ -9,8 +10,9 @@ class BandoriApi(BandoriLoader):
     '''
   
     
-    def __init__(self, region = 'en/'):
+    def __init__(self, region = 'en/', party=True):
         super().__init__(region)
+        self.party=party
 
 
     def get_cards(self, id : list = [], filters={}):

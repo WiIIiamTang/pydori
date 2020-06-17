@@ -1,3 +1,15 @@
+# models-only-dicts
+This branch is experimental. Trying to separate the two APIs - the user would be able to choose to use bandori.party or bandori database.
+
+Working on:
+ - making separate models for b party and b database
+ - adding missing models for b database
+ - integrating the change into BandoriApi
+Once done:
+ - check to dev
+
+ __
+
 
 # Pydori
 
