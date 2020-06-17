@@ -3,6 +3,8 @@
   
 
 [![PyPI version fury.io](https://badge.fury.io/py/pydori.svg)](https://pypi.python.org/pypi/pydori/)
+
+
 [![Build Status](https://travis-ci.org/WiIIiamTang/pydori.svg?branch=master)](https://travis-ci.org/WiIIiamTang/pydori)
   
 
@@ -28,7 +30,7 @@ Use pip to install:
 ``` pip install pydori ```
 
 
-# Quick start
+# Usage
 
 Working with pydori is done through the ```BandoriApi``` class. Create an instance of the class (and indicate your region if you're going to be using the bandori database api) and start using the functions provided.
 
