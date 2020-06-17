@@ -1,6 +1,10 @@
 import requests
 import datetime
-from .bandori_loader import BandoriLoader
+from .loader import BandoriLoader
+
+
+###############################################################################
+# Base model
 
 class BandoriObject:
     '''
@@ -22,6 +26,11 @@ class BandoriObject:
     
     def __str__(self):
         return str(self.data)
+###############################################################################
+
+
+###############################################################################
+# Bandori Party models
 
 class Card(BandoriObject):
     '''
@@ -373,12 +382,13 @@ class OfficialArt(Asset):
         self.source = data.get("source")
         self.source_link = data.get("source_link")
         self.song = data.get("song")
-        
+###############################################################################       
 
 
 
-################################################################
-# The following would be the result of interaction with bandori.ga api
+
+###############################################################################
+# Bandori Database models
 
 class Band(BandoriObject):
     '''

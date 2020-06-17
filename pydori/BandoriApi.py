@@ -1,5 +1,5 @@
-from .base_objects import *
-from .bandori_loader import BandoriLoader
+from .models import *
+from .loader import BandoriLoader
 
 
 class BandoriApi(BandoriLoader):

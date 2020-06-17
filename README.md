@@ -7,7 +7,7 @@
 [![Build Status](https://travis-ci.org/WiIIiamTang/pydori.svg?branch=master)](https://travis-ci.org/WiIIiamTang/pydori)
   
 
-A python wrapper for the bandori.party and bandori.ga public APIs.
+A python package to simplify usage of the bandori party and bandori database public APIs.
 
   
 
