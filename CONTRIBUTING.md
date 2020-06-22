@@ -32,12 +32,14 @@ Ultimately, you can do whatever you want with the source code, but I will sugges
 - These models are the classes that get returned when using the functions from p_api.py and d_api.py
 - The original json object is stored in the data attribute. It would be preferable if you made the attributes accessible as class attributes. Use the dictionary method ``.get()`` so that the attribute will be ``None`` if there is an error.
 - The class attributes **do not have to have the same name** as the original data keys. But you would have to note it down somewhere (in the docs, or comments).
+- helper functions (within any models class) should make an internal call to ``BandoriLoader._api_get`` with the correct URL if you want to create any other BandoriObjects.
 
 
 ## Testing
 Test the package with pytest and coverage.
 ```
 coverage run -m pytest --flake8
+coverage report
 ```
 
 ## PR
