@@ -16,7 +16,7 @@ class BandoriLoader:
     class FailedRequest(Exception):
         pass
 
-    def _retrieve_response(self, url) -> dict:
+    def _retrieve_response(self, url='') -> dict:
         '''
         Get a response from the url and returns the result
         as a dict.
@@ -28,7 +28,7 @@ class BandoriLoader:
 
         return res.json()
 
-    def _retrieve_responses(self, url, filters={}) -> list:
+    def _retrieve_responses(self, url='', filters={}) -> list:
         '''
         ### FOR BANDORI.PARTY API
 
@@ -118,7 +118,7 @@ class BandoriLoader:
 
                 return res
 
-    def _full_event_loader(self, url, filters={}) -> list:
+    def _full_event_loader(self, url='', filters={}) -> list:
         '''
         ### FOR BANDORI.PARTY API
 
