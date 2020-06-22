@@ -1,8 +1,5 @@
 from setuptools import setup, find_packages
 
-description = '''A python wrapper to interact with the bandori.party
-and bandori.ga public APIs'''
-
 with open('README.md') as f:
     long_description = f.read()
 
@@ -11,7 +8,7 @@ setup(
   packages=find_packages(),
   version='0.5.0',
   license='MIT',
-  description=description,
+  description="A python wrapper to interact for bandori.party/bandori.ga APIs",
   long_description=long_description,
   long_description_content_type='text/markdown',
   author='William Tang',
