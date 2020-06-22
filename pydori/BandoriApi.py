@@ -1,5 +1,22 @@
-from .models.gamodels import *
-from .models.ptymodels import *
+from .models.gamodels import (
+    Song,
+    Gacha,
+    Band
+)
+from .models.ptymodels import (
+    Card,
+    Member,
+    Event,
+    Costume,
+    Item,
+    AreaItem,
+    Comic,
+    Background,
+    Stamp,
+    Title,
+    Interface,
+    OfficialArt
+    )
 from .loader import BandoriLoader
 
 
@@ -8,71 +25,73 @@ class BandoriApi(BandoriLoader):
     Represents a class that interacts with the bandori.party
     and bandori.ga APIs
     '''
-  
-    
-    def __init__(self, region = 'en/'):
-        super().__init__(region)
 
+    def __init__(self, region='en/'):
+        super().__init__(region)
 
 ###############################################################################
 # Functions for Bandori party
-
-    def get_cards(self, id : list = [], filters={}):
+    def get_cards(self, id: list = [], filters={}) -> list:
         '''
         Get card by ids, as Card objects.
         If the list is empty, will get all cards.
         '''
         d = self._api_get(id=id, url=self.URL_PARTY+'cards/', filters=filters)
-        
+
         return [Card(data) for data in d]
 
-    def get_members(self, id : list = [], filters={}):
+    def get_members(self, id: list = [], filters={}) -> list:
         '''
         Get member by ids, as Member objects.
         If the list is empty, will get all members.
         '''
-        d = self._api_get(id=id, url=self.URL_PARTY+'members/', filters=filters)
-        
+        d = self._api_get(id=id, url=self.URL_PARTY+'members/',
+                          filters=filters)
+
         return [Member(data) for data in d]
 
-    def get_events(self, id : list = [], filters={}):
+    def get_events(self, id: list = [], filters={}) -> list:
         '''
         Get events by ids, as Event objects.
         If the list is empty, will get all events.
         '''
         if not id:
             if not filters:
-                events = self._full_event_loader(url=self.URL_PARTY+'events/', filters=filters)
+                events = self._full_event_loader(url=self.URL_PARTY+'events/',
+                                                 filters=filters)
             else:
-                events = self._full_event_loader(url=self.URL_PARTY+'events/', filters={})
-                events = [e for e in events if self._check_filters(filters=filters, obj=e)]
+                events = self._full_event_loader(url=self.URL_PARTY+'events/',
+                                                 filters={})
+                events = [e for e in events if self._check_filters(
+                          filters=filters, obj=e)]
         else:
-            events = self._api_get(id=id, url=self.URL_PARTY+'events/', filters=filters)
+            events = self._api_get(id=id, url=self.URL_PARTY+'events/',
+                                   filters=filters)
             for i, event in enumerate(events):
                 event['id'] = id[i]
 
         return [Event(event) for event in events]
 
-    def get_current_event(self):
+    def get_current_event(self) -> dict:
         '''
         Returns the current ongoing event, as provided by bandori database.
         '''
         event = self._retrieve_response(self.URL_GA+'event/')
-        id = event["eventId"] + 3 # offset of 3 to get the bandori.party events
+        id = event["eventId"] + 3  # offset of 3 to get the correct event
 
         return self.get_events(id=[id])[0]
 
-    
-    def get_costumes(self, id : list = [], filters={}):
+    def get_costumes(self, id: list = [], filters={}) -> list:
         '''
         Get costume by ids, as Costume objects.
         If the list is empty all costumes will be returned.
         '''
-        d = self._api_get(id=id, url=self.URL_PARTY+'costumes/', filters=filters)
+        d = self._api_get(id=id, url=self.URL_PARTY+'costumes/',
+                          filters=filters)
 
         return [Costume(data) for data in d]
-    
-    def get_items(self, id : list = [], filters={}):
+
+    def get_items(self, id: list = [], filters={}):
         '''
         Get item by ids, as Item objects.
         If the list is empty all items will be returned.
@@ -80,27 +99,28 @@ class BandoriApi(BandoriLoader):
         d = self._api_get(id=id, url=self.URL_PARTY+'items/', filters=filters)
 
         return [Item(data) for data in d]
-    
-    def get_areaitems(self, id : list = [], filters={}):
+
+    def get_areaitems(self, id: list = [], filters={}):
         '''
         Get areaitem by ids, as AreaItem objects.
         If the list is empty all items will be returned.
         '''
-        d = self._api_get(id=id, url=self.URL_PARTY+'areaitems/', filters=filters)
+        d = self._api_get(id=id, url=self.URL_PARTY+'areaitems/',
+                          filters=filters)
 
         return [AreaItem(data) for data in d]
-    
-    def get_assets(self, id : list = [], filters={}):
+
+    def get_assets(self, id: list = [], filters={}):
         '''
         Get asset by ids.
         If the list is empty all items will be returned.
-        
         The return value is a dict with keys to the categories of assets,
         and for values a list of Asset objects.
         '''
         d = self._api_get(id=id, url=self.URL_PARTY+'assets/', filters=filters)
 
-        sorted = {"comic" : [], "background" : [], "stamp": [], "title" : [], "interface" : [], "officialart" : []}
+        sorted = {"comic": [], "background": [], "stamp": [], "title": [],
+                  "interface": [], "officialart": []}
         for data in d:
             type = data["i_type"]
             if type == 'comic':
@@ -115,9 +135,8 @@ class BandoriApi(BandoriLoader):
                 sorted["interface"].append(Interface(data))
             else:
                 sorted["officialart"].append(OfficialArt(data))
-            
+
         return sorted
-    
 
 ###############################################################################
 # Functions for Bandori database
@@ -127,43 +146,43 @@ class BandoriApi(BandoriLoader):
         Get all bands as a list of Band objects.
         This cannot search by id.
         '''
-        d = self._api_get(id=[], url=self.URL_GA+'band/', party=False, filters=filters)
+        d = self._api_get(id=[], url=self.URL_GA+'band/', party=False,
+                          filters=filters)
 
         return [Band(data, region=self.region) for data in d]
 
-
-    def get_songs(self, id : list = [], filters={}):
+    def get_songs(self, id: list = [], filters={}):
         '''
         Get song by ids, as Song objects.
 
         If the list is empty all songs will be returned.
         '''
-        d = self._api_get(id=id, url=self.URL_GA+'music/', party=False, filters=filters)
-
+        d = self._api_get(id=id, url=self.URL_GA+'music/', party=False,
+                          filters=filters)
 
         return [Song(data, region=self.region) for data in d]
-    
-    def get_gachas(self, id : list = [], filters={}):
+
+    def get_gachas(self, id: list = [], filters={}):
         '''
         Get gacha by ids, as Gacha objects.
 
         If the list is empty all gacha will be returned.
         '''
-        d = self._api_get(id=id, url=self.URL_GA+'gacha/', party=False, filters=filters)
-
+        d = self._api_get(id=id, url=self.URL_GA+'gacha/', party=False,
+                          filters=filters)
 
         return [Gacha(data, region=self.region) for data in d]
 
+###############################################################################
 
-
-##############################################################################################
     def get_all(self):
         '''
         Get all possible objects from the apis as a dictionary.
         '''
-        d = {'cards': [], 'members': [], 'events': [], 'costumes': [], 'items': [],
-                'areaitems': [], 'assets' : {}, 'bands' : [], 'songs' : [], 'gachas' : []}
-        
+        d = {'cards': [], 'members': [], 'events': [], 'costumes': [],
+             'items': [], 'areaitems': [], 'assets': {}, 'bands': [],
+             'songs': [], 'gachas': []}
+
         d['cards'].extend(self.get_cards())
         d['members'].extend(self.get_members())
         d['events'].extend(self.get_events())

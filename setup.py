@@ -1,27 +1,34 @@
 from setuptools import setup, find_packages
 
+description = '''A python wrapper to interact with the bandori.party
+and bandori.ga public APIs'''
+
 with open('README.md') as f:
     long_description = f.read()
-  
+
 setup(
-  name = 'pydori',         
-  packages = find_packages(),   
-  version = '0.5.0',      
-  license='MIT',        
-  description = 'A python wrapper to interact with the bandori.party and bandori.ga public APIs',
+  name='pydori',
+  packages=find_packages(),
+  version='0.5.0',
+  license='MIT',
+  description=description,
   long_description=long_description,
-  long_description_content_type='text/markdown',  
-  author = 'William Tang',                         
-  url = 'https://github.com/WiIIiamTang/pydori',    
-  keywords = ['API', 'Bandori', 'Bang Dream', 'rythm game'],   
-  install_requires=['requests'],
+  long_description_content_type='text/markdown',
+  author='William Tang',
+  url='https://github.com/WiIIiamTang/pydori',
+  keywords=[
+    'API', 'Bandori', 'Bang Dream', 'rythm game'
+    ],
+  install_requires=[
+    'requests'
+    ],
   classifiers=[
-    'Intended Audience :: Developers',      
+    'Intended Audience :: Developers',
     'Topic :: Software Development :: Build Tools',
-    'License :: OSI Approved :: MIT License',   
+    'License :: OSI Approved :: MIT License',
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
     "Operating System :: OS Independent"
-  ],
+    ],
 )

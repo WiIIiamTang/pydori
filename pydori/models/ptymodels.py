@@ -1,7 +1,5 @@
-import requests
 import datetime
-from .base import *
-from ..loader import BandoriLoader
+from .base import BandoriObject
 
 
 ###############################################################################
@@ -11,9 +9,9 @@ class Card(BandoriObject):
     '''
     Represents a bang dream card.
     '''
-    def __init__(self, data : dict):
+    def __init__(self, data: dict):
         super().__init__(data)
-        
+
         self.member = data.get("member")
         self.rarity = data.get("i_rarity")
         self.attribute = data.get("i_attribute")
@@ -46,30 +44,31 @@ class Card(BandoriObject):
         self.visual_max = data.get("visual_max")
         self.visual_trained_max = data.get("visual_trained_max")
         self.cameo = data.get("cameo_members")
-    
+
     def get_card_member(self):
-        
-        d = self.bl._api_get(id=[self.member], url=self.URL_PARTY+'members/')
+
+        d = self._api_get(id=[self.member], url=self.URL_PARTY+'members/')
 
         return Member(d[0])
-    
+
     def get_cameo_members(self):
-        
-        d = self.bl._api_get(id=self.cameo, url=self.URL_PARTY+'members/')
+
+        d = self._api_get(id=self.cameo, url=self.URL_PARTY+'members/')
 
         return [Member(data) for data in d]
+
 
 class Member(BandoriObject):
     '''
     Represents a bang dream member.
     '''
-    def __init__(self, data : dict):
+    def __init__(self, data: dict):
         super().__init__(data)
         self.name = data.get("name")
         self.japanese_name = data.get("japanese_name")
         self.image = data.get("image")
         self.square_image = data.get("square_image")
-        self.band = data.get("i_band")                    # TODO: match band to Band object
+        self.band = data.get("i_band")  # TODO: match band to Band object?
         self.school = data.get("school")
         self.year = data.get("i_school_year")
         self.romaji_cv = data.get("romaji_CV")
@@ -80,16 +79,17 @@ class Member(BandoriObject):
         self.astro = data.get("i_astrological_sign")
         self.instrument = data.get("instrument")
         self.description = data.get("description")
-        
+
+
 class Event(BandoriObject):
     '''
     Represents a bang dream game event.
     '''
 
-    def __init__(self, data : dict, region = 'en/'):
+    def __init__(self, data: dict):
         super().__init__(data)
 
-        self.name = data.get("name")      
+        self.name = data.get("name")
         self.japanese_name = data.get("japanese_name")
         self.type = data.get("i_type")
         self.image = data.get("image")
@@ -110,73 +110,85 @@ class Event(BandoriObject):
         self.boost_stat = data.get("i_boost_stat")
         self.boost_members = data.get("boost_members")
 
-    def get_start_date(self, region = 'en'):
+    def get_start_date(self, region='en'):
         if region == 'en':
-            if self.english_start_date is not None: 
-                return datetime.datetime.strptime(self.english_start_date, '%Y-%m-%dT%H:%M:%SZ')
+            if self.english_start_date is not None:
+                return datetime.datetime.strptime(
+                    self.english_start_date, '%Y-%m-%dT%H:%M:%SZ')
             else:
                 return -1
         elif region == 'jp':
             if self.jp_start_date is not None:
-                return datetime.datetime.strptime(self.jp_start_date, '%Y-%m-%dT%H:%M:%SZ')
+                return datetime.datetime.strptime(
+                    self.jp_start_date, '%Y-%m-%dT%H:%M:%SZ')
             else:
                 return -1
         elif region == 'tw':
             if self.tw_start_date is not None:
-                return datetime.datetime.strptime(self.tw_start_date, '%Y-%m-%dT%H:%M:%SZ')
+                return datetime.datetime.strptime(
+                    self.tw_start_date, '%Y-%m-%dT%H:%M:%SZ')
             else:
                 return -1
         else:
             if self.kr_start_date is not None:
-                return datetime.datetime.strptime(self.kr_start_date, '%Y-%m-%dT%H:%M:%SZ')
+                return datetime.datetime.strptime(
+                    self.kr_start_date, '%Y-%m-%dT%H:%M:%SZ')
             else:
                 return -1
-    
-    def get_end_date(self, region = 'en'):
+
+    def get_end_date(self, region='en'):
         if region == 'en':
-            if self.english_end_date is not None: 
-                return datetime.datetime.strptime(self.english_end_date, '%Y-%m-%dT%H:%M:%SZ')
+            if self.english_end_date is not None:
+                return datetime.datetime.strptime(
+                    self.english_end_date, '%Y-%m-%dT%H:%M:%SZ')
             else:
                 return -1
         elif region == 'jp':
             if self.jp_end_date is not None:
-                return datetime.datetime.strptime(self.jp_end_date, '%Y-%m-%dT%H:%M:%SZ')
+                return datetime.datetime.strptime(
+                    self.jp_end_date, '%Y-%m-%dT%H:%M:%SZ')
             else:
                 return -1
         elif region == 'tw':
             if self.tw_end_date is not None:
-                return datetime.datetime.strptime(self.tw_end_date, '%Y-%m-%dT%H:%M:%SZ')
+                return datetime.datetime.strptime(
+                    self.tw_end_date, '%Y-%m-%dT%H:%M:%SZ')
             else:
                 return -1
         else:
             if self.kr_end_date is not None:
-                return datetime.datetime.strptime(self.kr_end_date, '%Y-%m-%dT%H:%M:%SZ')
+                return datetime.datetime.strptime(
+                    self.kr_end_date, '%Y-%m-%dT%H:%M:%SZ')
             else:
                 return -1
-    
+
     def get_main_card(self):
-        
-        data = self.bl._api_get(id=[self.main_card], url=self.URL_PARTY+'card/')
+
+        data = self._api_get(id=[self.main_card],
+                             url=self.URL_PARTY+'card/')
 
         return Card(data[0])
-    
+
     def get_secondary_card(self):
-        
-        data = self.bl._api_get(id=[self.secondary_card], url=self.URL_PARTY+'card/')
+
+        data = self._api_get(id=[self.secondary_card],
+                             url=self.URL_PARTY+'card/')
 
         return Card(data[0])
 
     def get_boost_members(self):
-        
-        d = self.bl._api_get(id=self.boost_attribute, url=self.URL_PARTY+'members/')
+
+        d = self._api_get(id=self.boost_attribute,
+                          url=self.URL_PARTY+'members/')
 
         return [Member(data) for data in d]
+
 
 class Costume(BandoriObject):
     '''
     Represents a bang dream costume.
     '''
-    def __init__(self, data : dict):
+    def __init__(self, data: dict):
         super().__init__(data)
         self.type = data.get("i_costume_type")
         self.card = data.get("card")
@@ -184,29 +196,31 @@ class Costume(BandoriObject):
         self.name = data.get("name")
 
         self.display_image = data.get("display_image")
-    
+
     def get_costume_member(self):
-        
-        data = self.bl._api_get(id=[self.member], url=self.URL_PARTY+'members/')
+
+        data = self._api_get(id=[self.member], url=self.URL_PARTY+'members/')
 
         return Member(data[0])
-    
+
     def get_costume_card(self):
-        
-        d = self.bl._api_get(id=[self.card], url=self.URL_PARTY+'cards/')
+
+        d = self._api_get(id=[self.card], url=self.URL_PARTY+'cards/')
 
         return Card(d[0])
+
 
 class Item(BandoriObject):
     '''
     Represents a bang dream in-game item
     '''
-    def __init__(self, data : dict):
+    def __init__(self, data: dict):
         super().__init__(data)
         self.name = data.get("name")
         self.type = data.get("i_type")
         self.description = data.get("m_description")
         self.image = data.get("image")
+
 
 class AreaItem(BandoriObject):
     '''
@@ -216,7 +230,7 @@ class AreaItem(BandoriObject):
         super().__init__(data)
         self.name = data.get("name")
         self.image = data.get("image")
-        self.area = data.get("area")    # TODO: match area id to a string - name of area (not available through api)
+        self.area = data.get("area")    # TODO: name of area??
         self.type = data.get("i_type")
         self.instrument = data.get("i_instrument")
         self.attribute = data.get("i_attribute")
@@ -242,6 +256,7 @@ class Asset(BandoriObject):
         super().__init__(data)
         self.type = data.get("i_type")
 
+
 class Comic(Asset):
     def __init__(self, data):
         super().__init__(data)
@@ -259,10 +274,11 @@ class Comic(Asset):
         self.song = data.get("song")
 
     def get_comic_members(self):
-        
-        d = self.bl._api_get(id=self.cameo, url=self.URL_PARTY+'members/')
+
+        d = self._api_get(id=self.cameo, url=self.URL_PARTY+'members/')
 
         return [Member(data) for data in d]
+
 
 class Background(Asset):
     def __init__(self, data):
@@ -280,8 +296,9 @@ class Background(Asset):
         self.source_link = data.get("source_link")
         self.song = data.get("song")
 
+
 class Stamp(Asset):
-    def __init__(self, data):  
+    def __init__(self, data):
         super().__init__(data)
         self.name = data.get("name")
         self.members = data.get("members")
@@ -295,12 +312,13 @@ class Stamp(Asset):
         self.source = data.get("source")
         self.source_link = data.get("source_link")
         self.song = data.get("song")
-    
+
     def get_stamp_members(self):
-        
-        d = self.bl._api_get(id=self.members, url=self.URL_PARTY+'members/')
+
+        d = self._api_get(id=self.members, url=self.URL_PARTY+'members/')
 
         return [Member(data) for data in d]
+
 
 class Title(Asset):
     def __init__(self, data):
@@ -320,11 +338,11 @@ class Title(Asset):
         self.value = data.get("value")
 
     def get_title_event(self):
-        
-        d = self.bl._api_get(id=[self.event], url=self.URL_PARTY+'events/')
+
+        d = self._api_get(id=[self.event], url=self.URL_PARTY+'events/')
 
         return Event(d[0])
-    
+
 
 class Interface(Asset):
     def __init__(self, data):
@@ -342,6 +360,7 @@ class Interface(Asset):
         self.source_link = data.get("source_link")
         self.song = data.get("song")
 
+
 class OfficialArt(Asset):
     def __init__(self, data):
         super().__init__(data)
@@ -357,9 +376,5 @@ class OfficialArt(Asset):
         self.source = data.get("source")
         self.source_link = data.get("source_link")
         self.song = data.get("song")
-###############################################################################       
 
-
-
-
-
+#############################################################################
