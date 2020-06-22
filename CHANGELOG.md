@@ -1,14 +1,24 @@
 # Changelog
 All notable changes are documented in this file.
+
 ## 0.5.0
+Everything is a BandoriLoader now!?
+
 ### Additions
 - linting support with flake8
 - BandoriObject inherits from BandoriLoader
 - bandori database endpoints: card, chara, degree, stamp, comic, skill
-- added BandoriApi functionality to switch api to use when requesting GET
+- BandoriApi functionality to switch api to use when requesting GET
+- get_active_gachas()
+- Docs updated
+- Contributing guidelines updated
 
 ### Removed
 - BandoriLoader as an attribute in BandoriObject
+- Got rid of some faulty tests
+
+### Changes
+- All BandoriObjects have a prefix 'D' or 'P' now to differentiate between objects retrieved from Bandori **P**arty or Bandori **D**atabase
 
 ## 0.4.4 - 2020-06-17
 Files have been reorganized in this update: the "models" directory contains base.py, gamodels.py, ptymodels.py which are just (separated) pieces of the original base_objects.py from previous versions. Also bandori_loader.py was renamed to loader.py. This is just to keep everything more organized as more endpoints are planned to be added in the future.
