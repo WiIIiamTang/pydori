@@ -45,12 +45,26 @@ Read this to get started on pydori:
  ```
  
  2. Use the bandori api class functions to access the endpoint you want. All requests made in this wrapper are GET requests using the requests module. See the documentation for what functions to use. The basic syntax is simple: ```get_{endpoint}()```, called on the api class. They usually return lists.
+ ```python
+ cards = bapi.get_cards()
+ ```
  
  3. GET requests can take optional arguments **id** and **filters**. **id** is a list of integers corresponding to the ids of the objects you want to get. **filters** are search terms you want to filter by: the key is the category to filter, and the value is the actual value to filter by (ie. results will only include objects that have this value for this corresponding key).
+ ```python
+ cards = bapi.get_cards(id=[511], filters={})
+ ```
  
  4. BandoriObjects are returned from the requests. The original json object will always be stored in ``BandoriObject.data`` but all (or most) of the terms can be accessed directly as class attributes. There can also be helper functions in these objects that speed up accessing relevant data.
+ ```python
+ cards = bapi.get_cards(id=[511])
+ card = cards[0]
  
- 5. See the Examples section or the Documentation if you need any help.
+ rimi = card.get_card_member()  # returns a PMember object
+ 
+ print(rimi.name)
+ ```
+ 
+ 5. See the examples below or the Documentation if you need any help.
 
 # Examples
 This example instantiates a PBandoriApi object, gets a card by ID, and displays the card's name.
