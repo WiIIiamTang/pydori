@@ -10,7 +10,16 @@
 
 A python wrapper to provide easier access to the bandori party and bandori database public APIs.
 
-  
+# Contents
+- [Info](https://github.com/WiIIiamTang/pydori/tree/dev#info)
+- [Installation](https://github.com/WiIIiamTang/pydori/tree/dev#installation)
+- [Usage](https://github.com/WiIIiamTang/pydori/tree/dev#usage)
+- [Examples](https://github.com/WiIIiamTang/pydori/tree/dev#examples)
+- [Documentation](https://github.com/WiIIiamTang/pydori/tree/dev#documentation)
+- [Contributing](https://github.com/WiIIiamTang/pydori/tree/dev#contributing)
+- [Alternatives](https://github.com/WiIIiamTang/pydori/tree/dev#alternatives)
+- [License](https://github.com/WiIIiamTang/pydori/tree/dev#license)
+- [Credits](https://github.com/WiIIiamTang/pydori/tree/dev#credits)
 
 # Info
 Both bandori party and bandori database provide extensive public bang dream apis. The purpose of this package is to simplify accessing the various endpoints they provide, while providing sufficient detailed documentation. Additional helper functions and classes are used to automate manual tasks. Users are able to choose between the Bandori Party API or the Bandori Database API. 
