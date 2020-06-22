@@ -11,15 +11,15 @@
 A python wrapper to provide easier access to the bandori party and bandori database public APIs.
 
 # Contents
-- [Info](https://github.com/WiIIiamTang/pydori/tree/master#info)
-- [Installation](https://github.com/WiIIiamTang/pydori/tree/master#installation)
-- [Usage](https://github.com/WiIIiamTang/pydori/tree/master#usage)
-- [Examples](https://github.com/WiIIiamTang/pydori/tree/master#examples)
-- [Documentation](https://github.com/WiIIiamTang/pydori/tree/master#documentation)
-- [Contributing](https://github.com/WiIIiamTang/pydori/tree/master#contributing)
-- [Alternatives](https://github.com/WiIIiamTang/pydori/tree/master#alternatives)
-- [License](https://github.com/WiIIiamTang/pydori/tree/master#license)
-- [Credits](https://github.com/WiIIiamTang/pydori/tree/master#credits)
+- [Info](https://github.com/WiIIiamTang/pydori#info)
+- [Installation](https://github.com/WiIIiamTang/pydori#installation)
+- [Usage](https://github.com/WiIIiamTang/pydori#usage)
+- [Examples](https://github.com/WiIIiamTang/pydori#examples)
+- [Documentation](https://github.com/WiIIiamTang/pydori#documentation)
+- [Contributing](https://github.com/WiIIiamTang/pydori#contributing)
+- [Alternatives](https://github.com/WiIIiamTang/pydori#alternatives)
+- [License](https://github.com/WiIIiamTang/pydori#license)
+- [Credits](https://github.com/WiIIiamTang/pydori#credits)
 
 # Info
 Both bandori party and bandori database provide extensive public bang dream apis. The purpose of this package is to simplify accessing the various endpoints they provide, while providing sufficient detailed documentation. Additional helper functions and classes are used to automate manual tasks. Users are able to choose between the Bandori Party API or the Bandori Database API. 
@@ -30,6 +30,27 @@ Both bandori party and bandori database provide extensive public bang dream apis
 - OOP class design
 - Make use of the bandori party and bandori database api in one package
 - additional functions to improve productivity
+
+### Current Bandori Party Endpoints
+- Cards
+- Members
+- Events
+- Costumes
+- Items
+- Areaitems
+- Assets
+
+### Current Bandori Database Endpoints
+- Cards
+- Members
+- Current Event
+- Bands
+- Songs
+- Gachas
+- Stamp
+- Comic
+- Degrees
+
 
 # Installation
 
