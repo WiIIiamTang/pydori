@@ -5,7 +5,7 @@ from .base import BandoriObject
 ###############################################################################
 # Bandori Party models
 
-class Card(BandoriObject):
+class PCard(BandoriObject):
     '''
     Represents a bang dream card.
     '''
@@ -49,16 +49,16 @@ class Card(BandoriObject):
 
         d = self._api_get(id=[self.member], url=self.URL_PARTY+'members/')
 
-        return Member(d[0])
+        return PMember(d[0])
 
     def get_cameo_members(self):
 
         d = self._api_get(id=self.cameo, url=self.URL_PARTY+'members/')
 
-        return [Member(data) for data in d]
+        return [PMember(data) for data in d]
 
 
-class Member(BandoriObject):
+class PMember(BandoriObject):
     '''
     Represents a bang dream member.
     '''
@@ -81,7 +81,7 @@ class Member(BandoriObject):
         self.description = data.get("description")
 
 
-class Event(BandoriObject):
+class PEvent(BandoriObject):
     '''
     Represents a bang dream game event.
     '''
@@ -167,24 +167,24 @@ class Event(BandoriObject):
         data = self._api_get(id=[self.main_card],
                              url=self.URL_PARTY+'card/')
 
-        return Card(data[0])
+        return PCard(data[0])
 
     def get_secondary_card(self):
 
         data = self._api_get(id=[self.secondary_card],
                              url=self.URL_PARTY+'card/')
 
-        return Card(data[0])
+        return PCard(data[0])
 
     def get_boost_members(self):
 
         d = self._api_get(id=self.boost_attribute,
                           url=self.URL_PARTY+'members/')
 
-        return [Member(data) for data in d]
+        return [PMember(data) for data in d]
 
 
-class Costume(BandoriObject):
+class PCostume(BandoriObject):
     '''
     Represents a bang dream costume.
     '''
@@ -201,16 +201,16 @@ class Costume(BandoriObject):
 
         data = self._api_get(id=[self.member], url=self.URL_PARTY+'members/')
 
-        return Member(data[0])
+        return PMember(data[0])
 
     def get_costume_card(self):
 
         d = self._api_get(id=[self.card], url=self.URL_PARTY+'cards/')
 
-        return Card(d[0])
+        return PCard(d[0])
 
 
-class Item(BandoriObject):
+class PItem(BandoriObject):
     '''
     Represents a bang dream in-game item
     '''
@@ -222,7 +222,7 @@ class Item(BandoriObject):
         self.image = data.get("image")
 
 
-class AreaItem(BandoriObject):
+class PAreaItem(BandoriObject):
     '''
     Represents a bang dream area item
     '''
@@ -240,7 +240,7 @@ class AreaItem(BandoriObject):
         self.description = data.get("about")
 
 
-class Asset(BandoriObject):
+class PAsset(BandoriObject):
     '''
     Represents a bang dream asset as defined by bandori.party
 
@@ -257,7 +257,7 @@ class Asset(BandoriObject):
         self.type = data.get("i_type")
 
 
-class Comic(Asset):
+class PComic(PAsset):
     def __init__(self, data):
         super().__init__(data)
         self.name = data.get("name")
@@ -277,10 +277,10 @@ class Comic(Asset):
 
         d = self._api_get(id=self.cameo, url=self.URL_PARTY+'members/')
 
-        return [Member(data) for data in d]
+        return [PMember(data) for data in d]
 
 
-class Background(Asset):
+class PBackground(PAsset):
     def __init__(self, data):
         super().__init__(data)
         self.name = data.get("name")
@@ -297,7 +297,7 @@ class Background(Asset):
         self.song = data.get("song")
 
 
-class Stamp(Asset):
+class PStamp(PAsset):
     def __init__(self, data):
         super().__init__(data)
         self.name = data.get("name")
@@ -317,10 +317,10 @@ class Stamp(Asset):
 
         d = self._api_get(id=self.members, url=self.URL_PARTY+'members/')
 
-        return [Member(data) for data in d]
+        return [PMember(data) for data in d]
 
 
-class Title(Asset):
+class PTitle(PAsset):
     def __init__(self, data):
         super().__init__(data)
         self.name = data.get("name")
@@ -341,10 +341,10 @@ class Title(Asset):
 
         d = self._api_get(id=[self.event], url=self.URL_PARTY+'events/')
 
-        return Event(d[0])
+        return PEvent(d[0])
 
 
-class Interface(Asset):
+class PInterface(PAsset):
     def __init__(self, data):
         super().__init__(data)
         self.name = data.get("name")
@@ -361,7 +361,7 @@ class Interface(Asset):
         self.song = data.get("song")
 
 
-class OfficialArt(Asset):
+class POfficialArt(PAsset):
     def __init__(self, data):
         super().__init__(data)
         self.name = data.get("name")

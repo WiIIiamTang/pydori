@@ -5,7 +5,107 @@ from .base import BandoriObject
 # Bandori Database models
 
 
-class Band(BandoriObject):
+class DCard(BandoriObject):
+    '''
+    Represents a bang dream card
+    '''
+    def __init__(self, data: dict, id_name='cardId', region='en/'):
+        super().__init__(data, id_name, region)
+        self.character_id = data.get("characterId")
+        self.rarity = data.get("rarity")
+        self.attribute = data.get("attr")
+        self.skill_id = data.get("skillId")
+        self.title = data.get("title")
+        self.level_limit = data.get("levelLimit")
+        self.res_link = (self.URL_GA_RES
+                         + '/assets/characters/resourceset/'
+                         + data.get("cardRes")  # TODO finish url
+                         )
+        self.live2d_link = (self.URL_GA_RES
+                            + '/assets/characters/resourceset/'
+                            + data.get("live2dRes"))  # TODO finish url
+        self.costume_id = data.get("costumeId")
+        self.released_at = data.get("releasedAt")
+        self.min_stats = data.get("simpleParams").get("min")
+        self.max_stats = data.get("simpleParams").get("max")
+
+    def get_skill(self):
+        d = self._api_get(url=self.URL_GA + 'skill/' + str(self.skill_id),
+                          party=False
+                          )
+
+        return DSkill(data=d, region=self.region)
+
+
+class DSkill(BandoriObject):
+    '''
+    Represents a Card's skill.
+    '''
+    def __init__(self, data: dict, id_name='skillId', region='en/'):
+        super().__init__(data, id_name, region)
+        self.skill_level = data.get("skillLevel")
+        self.duration = data.get("duration")
+        self.short_description = data.get("simpleDescription")
+        self.description = data.get("description")
+        self.skill_type = data.get("skillSortType")
+
+
+class DMember(BandoriObject):
+    '''
+    Represents a bang dream member.
+    Referred to as Character in bandori database.
+    '''
+    def __init__(self, data: dict, id_name='characterId', region='en/'):
+        super().__init__(data, id_name, region)
+        self.character_type = data.get("characterType")
+        self.band_id = data.get("bandId")
+        self.name = data.get("characterName")
+        self.ruby = data.get("ruby")
+
+
+class DDegree(BandoriObject):
+    '''
+    Represents a ranking from bang dream event.
+    '''
+    def __init__(self, data: dict, id_name='degreeId', region='en/'):
+        super().__init__(data, id_name, region)
+        self.seq = data.get("seq")
+        self.image_name = data.get("imageName")
+        self.degree_rank = data.get("degreeRank")
+        self.degree_name = data.get("degreeName")
+        self.degree_type = data.get("degreeType")
+        self.icon = data.get("iconImageName")
+        self.description = data.get("description")
+
+
+class DComic(BandoriObject):
+    '''
+    Represents a loading screen koma.
+    '''
+    def __init__(self, data: dict, 
+                 id_name='singleFrameCartoonId', region='en/'):
+        super().__init__(data, id_name, region)
+        self.title = data.get("title")
+        self.asset_name = data.get("assetBundleName")
+        self.seq = data.get("seq")
+        self.subTitle = data.get("subTitle")
+        self.asset_link = (self.URL_GA_RES
+                           + data.get("assetAddress")
+                           )
+
+
+class DStamp(BandoriObject):
+    '''
+    Represents a stamp
+    '''
+    def __init__(self, data, id_name='stampId', region='en/'):
+        super().__init__(data, id_name=id_name, region=region)
+        self.seq = data.get("seq")
+        self.image_link = data.get("imageName")  # TODO get link
+        self.type = data.get("stampType")
+
+
+class DBand(BandoriObject):
     '''
     Represents a bang dream band
     '''
@@ -21,13 +121,14 @@ class Band(BandoriObject):
         # Note: bands past Roselia have messed up members.
 
     def get_band_members(self):
-        pass
-        # d = self.bl._api_get(id=self.members, url=self.URL_PARTY+'members/')
+        d = self._api_get(id=self.members,
+                          url=self.URL_GA+'chara/',
+                          party=False)
 
-        # return [Member(data) for data in d]
+        return [DMember(data) for data in d]
 
 
-class Song(BandoriObject):
+class DSong(BandoriObject):
     '''
     Represents a playable song in bang dream
     '''
@@ -50,7 +151,7 @@ class Song(BandoriObject):
         self.arranger = data.get("arranger")
 
 
-class Gacha(BandoriObject):
+class DGacha(BandoriObject):
     '''
     Represents a gacha in bang dream
     '''
