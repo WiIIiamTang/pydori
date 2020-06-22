@@ -11,15 +11,15 @@
 A python wrapper to provide easier access to the bandori party and bandori database public APIs.
 
 # Contents
-- [Info](https://github.com/WiIIiamTang/pydori/tree/dev#info)
-- [Installation](https://github.com/WiIIiamTang/pydori/tree/dev#installation)
-- [Usage](https://github.com/WiIIiamTang/pydori/tree/dev#usage)
-- [Examples](https://github.com/WiIIiamTang/pydori/tree/dev#examples)
-- [Documentation](https://github.com/WiIIiamTang/pydori/tree/dev#documentation)
-- [Contributing](https://github.com/WiIIiamTang/pydori/tree/dev#contributing)
-- [Alternatives](https://github.com/WiIIiamTang/pydori/tree/dev#alternatives)
-- [License](https://github.com/WiIIiamTang/pydori/tree/dev#license)
-- [Credits](https://github.com/WiIIiamTang/pydori/tree/dev#credits)
+- [Info](https://github.com/WiIIiamTang/pydori/tree/master#info)
+- [Installation](https://github.com/WiIIiamTang/pydori/tree/master#installation)
+- [Usage](https://github.com/WiIIiamTang/pydori/tree/master#usage)
+- [Examples](https://github.com/WiIIiamTang/pydori/tree/master#examples)
+- [Documentation](https://github.com/WiIIiamTang/pydori/tree/master#documentation)
+- [Contributing](https://github.com/WiIIiamTang/pydori/tree/master#contributing)
+- [Alternatives](https://github.com/WiIIiamTang/pydori/tree/master#alternatives)
+- [License](https://github.com/WiIIiamTang/pydori/tree/master#license)
+- [Credits](https://github.com/WiIIiamTang/pydori/tree/master#credits)
 
 # Info
 Both bandori party and bandori database provide extensive public bang dream apis. The purpose of this package is to simplify accessing the various endpoints they provide, while providing sufficient detailed documentation. Additional helper functions and classes are used to automate manual tasks. Users are able to choose between the Bandori Party API or the Bandori Database API. 
@@ -73,7 +73,7 @@ Read this to get started on pydori:
  print(rimi.name)
  ```
  
- 5. See the examples below or the Documentation if you need any help.
+ 5. See the documentation, in the models section, to understand how to work with BandoriObjects.
 
 # Examples
 This example instantiates a PBandoriApi object, gets a card by ID, and displays the card's name.
@@ -108,7 +108,7 @@ roselia_songs = b.get_songs(id=[], filters={'bandName' : 'Roselia'})
 ```
 
 # Documentation
-The documentation is being moved to the [github wiki page](https://github.com/WiIIiamTang/pydori/wiki).
+The documentation is on the [github wiki page](https://github.com/WiIIiamTang/pydori/wiki).
 
 # Contributing
 
