@@ -4,6 +4,8 @@ All notable changes are documented in this file.
 ### Additions
 - linting support with flake8
 - BandoriObject inherits from BandoriLoader
+- bandori database endpoints: card, chara, degree, stamp, comic, skill
+- added BandoriApi functionality to switch api to use when requesting GET
 
 ### Removed
 - BandoriLoader as an attribute in BandoriObject

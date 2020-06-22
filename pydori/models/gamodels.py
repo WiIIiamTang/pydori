@@ -62,6 +62,9 @@ class DMember(BandoriObject):
         self.name = data.get("characterName")
         self.ruby = data.get("ruby")
 
+        self.detailed_data = self._api_get(id=[self.id],
+                                           url=self.URL_GA+'chara/')
+
 
 class DDegree(BandoriObject):
     '''
@@ -82,7 +85,7 @@ class DComic(BandoriObject):
     '''
     Represents a loading screen koma.
     '''
-    def __init__(self, data: dict, 
+    def __init__(self, data: dict,
                  id_name='singleFrameCartoonId', region='en/'):
         super().__init__(data, id_name, region)
         self.title = data.get("title")

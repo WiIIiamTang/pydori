@@ -35,7 +35,6 @@ class BandoriApi(BandoriLoader):
         super().__init__(region)
         self.party = party
 
-###############################################################################
     def get_cards(self, id: list = [], filters={}) -> list:
         '''
         Get card by ids, as Card objects.
@@ -160,9 +159,6 @@ class BandoriApi(BandoriLoader):
 
         return sorted
 
-###############################################################################
-# Functions that only work on Bandori database
-
     def get_bands(self, filters={}):
         '''
         Get all bands as a list of Band objects.
@@ -195,6 +191,14 @@ class BandoriApi(BandoriLoader):
 
         return [DGacha(data, region=self.region) for data in d]
 
+    def get_active_gachas(self):
+        '''
+        Get active gachas as Gacha objects.
+        '''
+        d = self._api_get(url=self.URL_GA+'gacha/current', party=False)
+
+        return [DGacha(data, region=self.region) for data in d]
+
     def get_rankings(self, id: list = [], filters={}):
         '''
         Get Degrees by ids, as Degree objects.
@@ -214,7 +218,7 @@ class BandoriApi(BandoriLoader):
                           filters=filters)
 
         return [DComic(data, region=self.region) for data in d]
-    
+
     def get_ga_stamps(self, id: list = [], filters={}):
         '''
         Get the stamps from the bandori database api
@@ -232,10 +236,10 @@ class BandoriApi(BandoriLoader):
         '''
         d = {'cards': [], 'members': [], 'events': [], 'costumes': [],
              'items': [], 'areaitems': [], 'assets': {}, 'bands': [],
-             'songs': [], 'gachas': []}
+             'songs': [], 'gachas': [], 'degrees': []}
 
-        d['cards'].extend(self.get_cards())
-        d['members'].extend(self.get_members())
+        d['cards'].extend(self.get_cards(party=self.party))
+        d['members'].extend(self.get_members(party=self.party))
         d['events'].extend(self.get_events())
         d['costumes'].extend(self.get_costumes())
         d['items'].extend(self.get_items())
@@ -244,5 +248,6 @@ class BandoriApi(BandoriLoader):
         d['bands'].extend(self.get_bands())
         d['songs'].extend(self.get_songs())
         d['gachas'].extend(self.get_gachas())
+        d['degrees'].extend(self.get_rankings())
 
         return d
