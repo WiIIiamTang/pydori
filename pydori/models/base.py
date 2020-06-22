@@ -1,4 +1,5 @@
 from ..loader import BandoriLoader
+import json
 
 
 class BandoriObject(BandoriLoader):
@@ -19,3 +20,7 @@ class BandoriObject(BandoriLoader):
 
     def __iter__(self):
         return iter(self.data)
+
+    def dump(self, file='dump.txt', mode='w'):
+        with open(file, mode) as f:
+            json.dump(self.data, f)

@@ -7,18 +7,22 @@ Everything is a BandoriLoader now!?
 ### Additions
 - linting support with flake8
 - BandoriObject inherits from BandoriLoader
+- BandoriObject dump function for json
 - bandori database endpoints: card, chara, degree, stamp, comic, skill
 - BandoriApi functionality to switch api to use when requesting GET
-- get_active_gachas()
+- get_active_gachas() for DBandoriApi
 - Docs updated
 - Contributing guidelines updated
 
 ### Removed
 - BandoriLoader as an attribute in BandoriObject
 - Got rid of some faulty tests
+- get_all()
 
 ### Changes
 - All BandoriObjects have a prefix 'D' or 'P' now to differentiate between objects retrieved from Bandori **P**arty or Bandori **D**atabase
+- Separated endpoint functions by API. Bandori party class in p_api.py, and Bandori database class in d_api.py. Each has their own BandoriApi class - PBandoriApi and DBandoriApi
+- BandoriApi.py now contains the function to instantiate the class depending on which api you want
 
 ## 0.4.4 - 2020-06-17
 Files have been reorganized in this update: the "models" directory contains base.py, gamodels.py, ptymodels.py which are just (separated) pieces of the original base_objects.py from previous versions. Also bandori_loader.py was renamed to loader.py. This is just to keep everything more organized as more endpoints are planned to be added in the future.

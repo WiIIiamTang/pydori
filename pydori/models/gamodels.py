@@ -175,3 +175,22 @@ class DGacha(BandoriObject):
 
     def get_end_date(self):
         return datetime.datetime.fromtimestamp(int(self.end_date) / 1000)
+
+
+class DEvent(BandoriObject):
+    '''
+    Represents an event in bang dream
+    '''
+    def __init__(self, data, id_name='eventId', region='en/'):
+        super().__init__(data, id_name=id_name, region=region)
+        self.type = data.get("eventType")
+        self.name = data.get("eventName")
+        self.asset_name = data.get("assetBundleName")
+        self.start_date = data.get("startAt")
+        self.end_date = data.get("endAt")
+        self.enabled = data.get("enableFlag")
+        self.bgm_asset_name = data.get("bgmAssetBundleName")
+        self.bgm_file_name = data.get("bgmFileName")
+        self.point_rewards = data.get("pointRewards")
+        self.rank_rewards = data.get("rankingRewards")
+        self.detail = data.get("detail")

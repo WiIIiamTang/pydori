@@ -1,2 +1,1 @@
-from .BandoriApi import BandoriApi
-BandoriApi
+from .BandoriApi import *

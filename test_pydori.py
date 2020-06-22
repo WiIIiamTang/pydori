@@ -1,15 +1,15 @@
 import pytest
-from pydori import BandoriApi as ba
+from pydori import bandori_api
 
 
 @pytest.fixture
 def api_en():
-    return ba()
+    return bandori_api()
 
 
 @pytest.fixture
-def api_jp():
-    return ba('jp/')
+def api_ga_en():
+    return bandori_api(region='en/', party=False)
 
 ###############################################################################
 # Testing BandoriApi functions
@@ -102,8 +102,8 @@ def test_assets(api_en, id, filters, expected):
 @pytest.mark.parametrize('filters, expected', [
     ({}, 'Afterglow')
 ])
-def test_bands(api_en, filters, expected):
-    bands = api_en.get_bands(filters=filters)
+def test_bands(api_ga_en, filters, expected):
+    bands = api_ga_en.get_bands(filters=filters)
     result = bands[1]
 
     assert result.name == expected
@@ -113,8 +113,8 @@ def test_bands(api_en, filters, expected):
     ([89, 97], {}, 'Opera of the wasteland'),
     ([], {'bandName': 'Roselia'}, 'FIRE BIRD'),
 ])
-def test_songs(api_en, id, filters, expected):
-    songs = api_en.get_songs(id=id, filters=filters)
+def test_songs(api_ga_en, id, filters, expected):
+    songs = api_ga_en.get_songs(id=id, filters=filters)
     result = songs[1]
 
     assert result.title == expected
@@ -124,8 +124,8 @@ def test_songs(api_en, id, filters, expected):
     ([120], {}, 'Head Start Gacha'),
     ([], {}, 'ガルパーティ！in東京開催記念ガチャ')
 ])
-def test_gachas(api_en, id, filters, expected):
-    gachas = api_en.get_gachas(id=id, filters=filters)
+def test_gachas(api_ga_en, id, filters, expected):
+    gachas = api_ga_en.get_gachas(id=id, filters=filters)
     result = gachas[0]
 
     assert result.name == expected
