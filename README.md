@@ -31,7 +31,7 @@ Both bandori party and bandori database provide extensive public bang dream apis
 - Make use of the bandori party and bandori database api in one package
 - additional functions to improve productivity
 
-### Current Bandori Party Endpoints
+#### Current Bandori Party Endpoints
 - Cards
 - Members
 - Events
@@ -40,7 +40,7 @@ Both bandori party and bandori database provide extensive public bang dream apis
 - Areaitems
 - Assets
 
-### Current Bandori Database Endpoints
+#### Current Bandori Database Endpoints
 - Cards
 - Members
 - Current Event
@@ -94,7 +94,7 @@ Read this to get started on pydori:
  print(rimi.name)
  ```
  
- 5. See the documentation, in the models section, to understand how to work with BandoriObjects.
+ 5. See the documentation, in the models section, to understand how to work with BandoriObjects. The [quick start guide](https://github.com/WiIIiamTang/pydori/wiki/Quick-Start) explains a bit more in detail how to get use pydori.
 
 # Examples
 This example instantiates a PBandoriApi object, gets a card by ID, and displays the card's name.
