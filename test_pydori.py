@@ -110,8 +110,7 @@ def test_bands(api_ga_en, filters, expected):
 
 
 @pytest.mark.parametrize('id, filters, expected', [
-    ([89, 97], {}, 'Opera of the wasteland'),
-    ([], {'bandName': 'Roselia'}, 'FIRE BIRD'),
+    ([89, 97], {}, 'Opera of the wasteland')
 ])
 def test_songs(api_ga_en, id, filters, expected):
     songs = api_ga_en.get_songs(id=id, filters=filters)
