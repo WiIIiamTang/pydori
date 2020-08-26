@@ -1,7 +1,15 @@
 # Changelog
 All notable changes are documented in this file.
 
-## 0.5.0
+## 0.5.2 - 2020-08-26
+- Fixed Event objects having the wrong link to their main and secondary cards.
+
+## 0.5.1 - 2020-06-23
+- Fixed all resource links not redirecting to the right url.
+  - Known issue: some resource link cannot be found.
+
+
+## 0.5.0 - 2020-06-22
 Everything is a BandoriLoader now!?
 
 ### Additions

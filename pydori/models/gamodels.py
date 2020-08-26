@@ -19,11 +19,21 @@ class DCard(BandoriObject):
         self.level_limit = data.get("levelLimit")
         self.res_link = (self.URL_GA_RES
                          + '/assets/characters/resourceset/'
-                         + data.get("cardRes")  # TODO finish url
+                         + data.get("cardRes")
+                         + '_rip/'
                          )
+        self.image = self.res_link + 'card_normal.png'
+        self.image_trained = self.res_link + 'card_after_training.png'
+        self.trim = self.res_link + 'trim_normal.png'
+        self.trim_trained = self.res_link + 'trim_after_training.png'
+
         self.live2d_link = (self.URL_GA_RES
-                            + '/assets/characters/resourceset/'
-                            + data.get("live2dRes"))  # TODO finish url
+                            + '/assets/characters/livesd/'
+                            + data.get("live2dRes")
+                            + '_rip/'
+                            )
+        self.chibi = self.live2d_link + 'sdchara.png'
+
         self.costume_id = data.get("costumeId")
         self.released_at = data.get("releasedAt")
         self.min_stats = data.get("simpleParams").get("min")
@@ -104,7 +114,11 @@ class DStamp(BandoriObject):
     def __init__(self, data, id_name='stampId', region='en/'):
         super().__init__(data, id_name=id_name, region=region)
         self.seq = data.get("seq")
-        self.image_link = data.get("imageName")  # TODO get link
+        self.image_link = (self.URL_GA_RES
+                           + '/stamp/01_rip/'
+                           + data.get("imageName")
+                           + '.png'
+                           )
         self.type = data.get("stampType")
 
 
