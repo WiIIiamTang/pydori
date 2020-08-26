@@ -178,7 +178,7 @@ class PEvent(BandoriObject):
 
     def get_boost_members(self):
 
-        d = self._api_get(id=self.boost_attribute,
+        d = self._api_get(id=self.boost_members,
                           url=self.URL_PARTY+'members/')
 
         return [PMember(data) for data in d]
