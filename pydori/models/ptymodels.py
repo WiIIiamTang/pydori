@@ -165,14 +165,14 @@ class PEvent(BandoriObject):
     def get_main_card(self):
 
         data = self._api_get(id=[self.main_card],
-                             url=self.URL_PARTY+'card/')
+                             url=self.URL_PARTY+'cards/')
 
         return PCard(data[0])
 
     def get_secondary_card(self):
 
         data = self._api_get(id=[self.secondary_card],
-                             url=self.URL_PARTY+'card/')
+                             url=self.URL_PARTY+'cards/')
 
         return PCard(data[0])
 
