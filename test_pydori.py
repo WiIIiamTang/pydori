@@ -52,7 +52,7 @@ def test_events(api_en, id, filters, expected):
 
 @pytest.mark.parametrize('id, filters, expected', [
     ([1463], {}, 1460),
-    ([], {'member': 29}, 1460)
+    ([1463, 53, 594], {'member': 29}, 1460)
 ])
 def test_costumes(api_en, id, filters, expected):
     costumes = api_en.get_costumes(id=id, filters=filters)
