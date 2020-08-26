@@ -1,8 +1,9 @@
 # Changelog
 All notable changes are documented in this file.
 
-## 0.5.2 - 2020-08-26
+## 0.5.2/0.5.3 - 2020-08-26
 - Fixed Event objects having the wrong link to their main and secondary cards.
+- Fixed Event objects not returning boost member objects correctly.
 
 ## 0.5.1 - 2020-06-23
 - Fixed all resource links not redirecting to the right url.
