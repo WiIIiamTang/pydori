@@ -5,7 +5,7 @@
 [![PyPI version fury.io](https://badge.fury.io/py/pydori.svg)](https://pypi.python.org/pypi/pydori/)
 
 
-[![Build Status](https://travis-ci.org/WiIIiamTang/pydori.svg?branch=master)](https://travis-ci.org/WiIIiamTang/pydori)
+[![Build Status](https://travis-ci.com/WiIIiamTang/pydori.svg?branch=master)](https://travis-ci.com/WiIIiamTang/pydori)
   
 
 A python wrapper to provide easier access to the bandori party and bandori database public APIs.
